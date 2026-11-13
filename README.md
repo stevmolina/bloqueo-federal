@@ -2,6 +2,30 @@
 
 MVP para el **Desafío Fútbol** (track Streaming de QualyData, Hackathon Argentina Space 2026, Salta).
 
+> **El juez sigue decidiendo. Bloqueo Federal hace que su firma llegue a todo el país en un minuto, sin tirar
+> abajo a nadie inocente.**
+
+## Por qué importa
+
+Para el Superclásico del 1 de noviembre de 2026 la Justicia pidió bloquear **182 dominios piratas**
+([La Capital](https://www.lacapital.com.ar/superclasico-bloquearon-argentina-mas-180-sitios-piratas-que-iban-retransmitir-boca-y-river-n10289906.html)).
+Pero un sitio pirata cambia de servidor en minutos y el partido dura dos horas. Hoy pierden tres:
+
+- **El hincha.** "Fútbol gratis" muchas veces es una trampa: en septiembre de 2026 la Justicia bloqueó 300 sitios
+  que robaban datos bancarios ([Señal News](https://senalnews.com/es/data/argentina-tras-denuncia-de-alianza-la-justicia-bloquea-300-dominios-clandestinos)).
+- **La panadería del barrio.** Si comparte servidor con un pirata y se bloquea la IP, se cae su tienda. En Italia,
+  un sistema de bloqueo sin juez dejó sin Google Drive a todo el país
+  ([TorrentFreak](https://torrentfreak.com/google-drive-blackout-in-italy-after-another-major-anti-piracy-blunder-241020/)).
+- **La cooperativa del pueblo.** Sin un canal directo, los proveedores chicos reciben la orden tarde y no llegan a
+  aplicarla.
+
+**Qué cambia con Bloqueo Federal:** el juez de turno ve evidencia sellada y firma desde el celular; la orden llega a
+todos los proveedores, del grande a la cooperativa, en el tipo de bloqueo que cada uno acepta; si el servidor es
+compartido, solo se bloquea el dominio. En el partido de práctica: **7 de 7 streams bloqueados, el pirata visible menos
+del 1 % del tiempo y 0 sitios legítimos afectados** (verificador oficial).
+
+**Video de demo (2:56):** ver Hacki.
+
 Durante el partido, la plataforma hace el circuito completo:
 
 ```

@@ -97,7 +97,12 @@ class Web:
                                 for q in p.proveedores],
                 "metricas": {"expedientes": len(p.expedientes), "descartes": len(p.descartes),
                              "aprobados": sum(1 for x in p.expedientes.values() if x["estado"] == "aprobado"),
-                             "ordenes_aplicadas": sum(1 for o in p.ordenes.values() if o["estado"] == "aplicada")},
+                             "ordenes_aplicadas": sum(1 for o in p.ordenes.values() if o["estado"] == "aplicada"),
+                             # Legitimate sites that shared a server with an approved pirate and stayed online
+                             # because the platform blocked only the domain.
+                             "protegidos": sorted({d for x in p.expedientes.values() if x["estado"] == "aprobado"
+                                                   and x["riesgo_colateral"]["ip_compartida"]
+                                                   for d in x["riesgo_colateral"].get("dominios_ajenos", [])})},
             }
 
     # ---- server
@@ -304,7 +309,7 @@ function render(){const s=est;$('min').textContent=`Minuto ${s.minuto.toFixed(1)
  :'<div class="card vacia">Sin expedientes pendientes.</div>';
  $('rec').innerHTML=s.recientes.map(x=>`<div style="margin-bottom:8px"><a href="/expediente/${esc(x.id)}" target=_blank>${esc(x.id)}</a> ${esc(x.host)}
  <small>${esc(x.estado)}</small><div class=prov>${Object.entries(x.proveedores).map(([p,e])=>`<span><i class="d ${e==='aplicada'?'dg':e==='fallida'||e==='rechazada'?'dr':'dy'}"></i>${esc(p)}</span>`).join('')}</div></div>`).join('')||'<small>—</small>';
- const m=s.metricas;$('met').innerHTML=`<small>Expedientes ${m.expedientes} · aprobados ${m.aprobados} · descartados ${m.descartes} · órdenes aplicadas ${m.ordenes_aplicadas}</small>`}
+ const m=s.metricas;$('met').innerHTML=`<div style="font-size:30px;font-weight:700;color:#15803d">${m.protegidos.length}</div><div style="margin-bottom:6px"><b>sitios legítimos protegidos</b><br><small>Comparten servidor con un pirata y siguen en línea: se bloqueó solo el dominio.</small><br><small style="color:#15803d">${m.protegidos.slice(0,6).map(esc).join(' · ')}${m.protegidos.length>6?' …':''}</small></div><small>Expedientes ${m.expedientes} · aprobados ${m.aprobados} · descartados ${m.descartes} · órdenes aplicadas ${m.ordenes_aplicadas}</small>`}
 async function tick(){const[st,s]=await api('/api/estado');est=s;
  $('login').style.display=s.juez?'none':'block';$('app').style.display=s.juez?'grid':'none';$('salir').style.display=s.juez?'inline':'none';
  if(!s.juez){$('min').textContent=`Minuto ${s.minuto.toFixed(1)}`;return}
