@@ -1,0 +1,72 @@
+{
+  "auditoria": {
+    "integra": true,
+    "detalle": "auditoría íntegra (214 entradas)"
+  },
+  "expedientes": [
+    {
+      "id": "EXP-2026-0001",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0002",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0003",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0033",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0040",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0041",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0051",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0052",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    },
+    {
+      "id": "EXP-2026-0067",
+      "sello_ok": true,
+      "sello_en_auditoria": true,
+      "capturas_ok": true,
+      "firma_ok": true
+    }
+  ],
+  "errores": []
+}

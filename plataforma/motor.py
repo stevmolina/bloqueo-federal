@@ -31,10 +31,23 @@ def firmar(clave: str, mensaje: str) -> str:
     return hmac.new(clave.encode("utf-8"), mensaje.encode("utf-8"), hashlib.sha256).hexdigest()
 
 
+# Multi-label public suffixes and shared platforms where each subdomain belongs to a different owner.
+SUFIJOS_PUBLICOS = {
+    "com.ar", "gob.ar", "gov.ar", "org.ar", "net.ar", "edu.ar", "int.ar", "mil.ar", "tur.ar", "musica.ar",
+    "com.br", "com.mx", "com.co", "com.pe", "com.uy", "com.py", "com.bo", "com.ve", "com.ec", "co.uk", "org.uk",
+    "vercel.app", "netlify.app", "github.io", "pages.dev", "workers.dev", "herokuapp.com", "blogspot.com",
+    "web.app", "firebaseapp.com", "azurewebsites.net", "cloudfront.net", "appspot.com", "onrender.com",
+    "glitch.me", "ngrok.io", "ngrok-free.app", "trycloudflare.com", "duckdns.org", "no-ip.org", "r2.dev",
+    "b-cdn.net", "akamaized.net", "fastly.net", "wordpress.com", "wixsite.com", "fly.dev", "railway.app",
+}
+
+
 def dominio_base(host: str) -> str:
-    """Registrable domain approximation: last two labels (s1.pelotaya.test -> pelotaya.test)."""
-    partes = host.lower().strip(".").split(".")
-    return ".".join(partes[-2:]) if len(partes) >= 2 else host.lower()
+    """Registrable domain: last two labels, or three under a public suffix (cdn.sitio.com.ar -> sitio.com.ar)."""
+    partes = [x for x in (host or "").strip().lower().strip(".").split(".") if x]
+    if len(partes) >= 3 and ".".join(partes[-2:]) in SUFIJOS_PUBLICOS:
+        return ".".join(partes[-3:])
+    return ".".join(partes[-2:]) if len(partes) >= 2 else ".".join(partes)
 
 
 def host_de_url(url: str) -> str:
@@ -79,7 +92,14 @@ class Auditoria:
         self.lock = threading.Lock()
         self.previo = "0" * 64
         self.n = 0
-        self.f = open(ruta, "w", encoding="utf-8")
+        if ruta.exists() and ruta.stat().st_size > 0:
+            # Restart during a match: continue the same chain instead of overwriting the evidence.
+            with open(ruta, encoding="utf-8") as f:
+                for linea in f:
+                    if linea.strip():
+                        e = json.loads(linea)
+                        self.previo, self.n = e["hash"], e["n"]
+        self.f = open(ruta, "a", encoding="utf-8")
 
     def registrar(self, evento: str, minuto: Optional[float], **datos: Any) -> str:
         with self.lock:
@@ -126,6 +146,9 @@ class Plataforma:
         self.args = args
         self.api = Api(args.servidor)
         self.salida = Path(args.salida)
+        previo = self.salida / "expedientes.json"
+        if previo.exists():
+            previo.rename(self.salida / f"expedientes_previo_{int(time.time())}.json")
         self.audit = Auditoria(self.salida / "auditoria.jsonl")
         juzgados = json.loads(Path(args.juzgados).read_text(encoding="utf-8"))
         # Claves de firma de demostración: solo se usan después de que el juez aprobó.
@@ -144,7 +167,7 @@ class Plataforma:
         self.desde_rec = -1.0
         self.minuto = 0.0
         self.de_turno: List[str] = []
-        self.seq = 0
+        self.seq = self.audit.n  # unique ids even after a restart
         self.lock = threading.RLock()
 
     # ---- arranque
@@ -161,18 +184,19 @@ class Plataforma:
 
     # ---- clasificación de la detección
     def clasificar(self, d: dict) -> Tuple[str, str]:
-        marca = d.get("marca_de_agua_extraida") or ""
+        marca = (d.get("marca_de_agua_extraida") or "").strip().upper()
         validas = self.partido.get("marcas_de_agua_validas", [])
         licenciatarios = self.partido.get("licenciatarios", [])
-        host = (d.get("host_stream") or "").lower()
+        host = (d.get("host_stream") or "").strip().lower().strip(".")
         pagina = host_de_url(d.get("pagina", ""))
         if not marca:
             return "descartada", "sin marca de agua: no se puede probar que sea la señal del partido"
-        coincide = next((v for v in validas if marca.startswith(v["prefijo"] + "-") or marca == v["prefijo"]), None)
+        coincide = next((v for v in validas if marca.startswith(v["prefijo"].upper() + "-") or marca == v["prefijo"].upper()), None)
         if coincide is None:
             return "descartada", f"la marca {marca} no corresponde a este partido"
         for lic in licenciatarios:
-            if marca.startswith(lic["prefijo_marca"]):
+            pm = lic["prefijo_marca"].upper()
+            if marca == pm or marca.startswith(pm + "-"):
                 autorizados = {x.lower() for x in lic.get("dominios_autorizados", [])}
                 if host in autorizados or (pagina in autorizados and dominio_base(host) in {dominio_base(a) for a in autorizados}):
                     return "legitima", f"licenciatario autorizado ({lic['nombre']}) en su propio dominio"
@@ -204,7 +228,10 @@ class Plataforma:
     # ---- expediente
     def procesar_deteccion(self, d: dict) -> None:
         clase, motivo = self.clasificar(d)
-        host, ip = d["host_stream"].lower(), d["ip_servidor"]
+        host = (d.get("host_stream") or host_de_url(d.get("stream_url") or "") or "").strip().lower().strip(".")
+        ip = (d.get("ip_servidor") or "").strip()
+        if clase == "pirata" and not host:
+            clase, motivo = "descartada", "detección sin host del stream: no hay qué bloquear"
         if clase != "pirata":
             self.descartes.append({"deteccion": d["id"], "clase": clase, "motivo": motivo, "host": host, "ip": ip})
             self.audit.registrar("deteccion_descartada", self.minuto, deteccion=d["id"], clase=clase, motivo=motivo,

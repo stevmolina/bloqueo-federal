@@ -1,0 +1,1727 @@
+{
+  "expedientes": [
+    {
+      "id": "EXP-2026-0001",
+      "tipo": "deteccion",
+      "creado_min": 2.02,
+      "estado": "aprobado",
+      "sitio": "pelotaya.test",
+      "host_stream": "s1.pelotaya.test",
+      "ip_servidor": "203.0.113.10",
+      "asn": 64600,
+      "marca": "LP26-PRA-OFI-S048211",
+      "origen": null,
+      "clasificacion": "marca de agua de la señal oficial (Señal oficial del titular (plataforma propia)) en un dominio no autorizado",
+      "riesgo_colateral": {
+        "ip": "203.0.113.10",
+        "asn": 64600,
+        "organizacion": "Bruma Hosting Dedicado (ficticio)",
+        "dominios_en_ip": [
+          "s1.pelotaya.test",
+          "s1-respaldo.pelotaya.test"
+        ],
+        "dominios_ajenos": [],
+        "ip_compartida": false,
+        "motivo": "IP dedicada al sitio pirata"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "ip",
+          "objetivo": "203.0.113.10"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "s1.pelotaya.test"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "s1-respaldo.pelotaya.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "ip",
+          "objetivo": "203.0.113.10"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "s1.pelotaya.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "s1-respaldo.pelotaya.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "s1.pelotaya.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "s1-respaldo.pelotaya.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "ip",
+          "objetivo": "203.0.113.10"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "s1.pelotaya.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "s1-respaldo.pelotaya.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "deteccion": "D-0001",
+          "minuto": 2.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s1.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "77b14ea8874ef8bbbf99cc292fd820a9e8df09fa4d4c00ebaeb9003e6b9bfbe1",
+          "captura_min": 2.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "00314f05742d4f839f11b597dc4a01b942b3897809d66ab63213c63ce785faaa"
+        },
+        {
+          "deteccion": "D-0005",
+          "minuto": 12.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s1.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "531f3f50ce31a28677c30ebc39bf1b9ed1d3570262f136f4661bb57ae157948e",
+          "captura_min": 12.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "9e38007d0fa529c736f7b57209f8a893c3f26d55dcd20be51d01a81b0d97bfe7"
+        },
+        {
+          "deteccion": "D-0009",
+          "minuto": 22.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s1.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "e292b8ce55850405b2bfccc50a8f615fdef40c74c7a59d9086bcf1b7d43810f1",
+          "captura_min": 22.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "f52f783f4a49b7eefef0a741cc167091d1d554429fe80c8be52db9932306f22f"
+        },
+        {
+          "deteccion": "D-0012",
+          "minuto": 32.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s1.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "ebd95d498f843ac52f7e0fcfe36a7013a510cfc5c1dcf3952929efdb583f30c8",
+          "captura_min": 32.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "f8e3f0961a980420b94a513711fb3dc30d55421db731b7645bd4faa62dcbd5ef"
+        }
+      ],
+      "decision": {
+        "juez_id": "jueza-laura-ficticia",
+        "juzgado_id": "jg-centro-3",
+        "aprueba": true,
+        "minuto": 3.7,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "9843b781b8d36d718c7e3d39c2ac54b3df9502cd412ff73000152c896177f459"
+      },
+      "ordenes": [
+        "ord-aurora-0004",
+        "ord-aurora-0005",
+        "ord-aurora-0006",
+        "ord-andina-0007",
+        "ord-andina-0008",
+        "ord-andina-0009",
+        "ord-valle-0010",
+        "ord-valle-0011",
+        "ord-cumbre-0012",
+        "ord-cumbre-0013",
+        "ord-cumbre-0014"
+      ],
+      "ratificado_por": [
+        "juez-martin-ejemplo"
+      ],
+      "tipo_sellado": "deteccion",
+      "n_evidencia_sellada": 1,
+      "sello": "782c06319e6c2998762c3c3d0c7ae3ff1d0ff7188f9803dad1aeddb5365922d3",
+      "notificado_min": 2.02,
+      "predicho": true
+    },
+    {
+      "id": "EXP-2026-0002",
+      "tipo": "preventivo",
+      "creado_min": 2.02,
+      "estado": "aprobado",
+      "sitio": "pelotaya.test",
+      "host_stream": "espejo.pelotaya.test",
+      "ip_servidor": "198.51.100.77",
+      "asn": 64630,
+      "marca": "LP26-PRA-OFI-S048211",
+      "origen": "EXP-2026-0001",
+      "clasificacion": "infraestructura vinculada a pelotaya.test (expediente EXP-2026-0001): el dominio espejo.pelotaya.test del mismo sitio figura en DNS pasivo en 198.51.100.77. Bloqueo preventivo, sin stream detectado aún.",
+      "riesgo_colateral": {
+        "ip": "198.51.100.77",
+        "asn": 64630,
+        "organizacion": "Servidores Litoral (ficticio)",
+        "dominios_en_ip": [
+          "s3.pelotaya.test",
+          "espejo.pelotaya.test"
+        ],
+        "dominios_ajenos": [],
+        "ip_compartida": false,
+        "motivo": "IP dedicada al sitio pirata"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "ip",
+          "objetivo": "198.51.100.77"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "ip",
+          "objetivo": "198.51.100.77"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "ip",
+          "objetivo": "198.51.100.77"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "tipo": "dns_pasivo",
+          "dominio": "espejo.pelotaya.test",
+          "ip": "198.51.100.77",
+          "consulta_min": 2.02,
+          "sha256_respuesta": "2f5b7a96cf95900e0f7907999f68d408c07131deb3c97d2b7007765db7c51a10"
+        }
+      ],
+      "decision": {
+        "juez_id": "jueza-laura-ficticia",
+        "juzgado_id": "jg-centro-3",
+        "aprueba": true,
+        "minuto": 3.7,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "dc15fb21e55ba13cb2692babc2557b467fcacb4dbee4cc7665cc9b9337c6edf9"
+      },
+      "ordenes": [
+        "ord-aurora-0015",
+        "ord-aurora-0016",
+        "ord-aurora-0017",
+        "ord-andina-0018",
+        "ord-andina-0019",
+        "ord-andina-0020",
+        "ord-valle-0021",
+        "ord-valle-0022",
+        "ord-cumbre-0023",
+        "ord-cumbre-0024",
+        "ord-cumbre-0025",
+        "ord-cumbre-0035"
+      ],
+      "ratificado_por": [],
+      "tipo_sellado": "preventivo",
+      "n_evidencia_sellada": 1,
+      "sello": "b3af1254d1d9816043beb7a059c316ca92b155d05be737ce4588b399583a95a8",
+      "notificado_min": 2.02
+    },
+    {
+      "id": "EXP-2026-0003",
+      "tipo": "confirmado",
+      "creado_min": 2.02,
+      "estado": "aprobado",
+      "sitio": "pelotaya.test",
+      "host_stream": "s2.pelotaya.test",
+      "ip_servidor": "203.0.113.11",
+      "asn": 64600,
+      "marca": "LP26-PRA-OFI-S048211",
+      "origen": "EXP-2026-0001",
+      "clasificacion": "infraestructura vinculada a pelotaya.test (expediente EXP-2026-0001): el dominio s2.pelotaya.test del mismo sitio figura en DNS pasivo en 203.0.113.11. Bloqueo preventivo, sin stream detectado aún.",
+      "riesgo_colateral": {
+        "ip": "203.0.113.11",
+        "asn": 64600,
+        "organizacion": "Bruma Hosting Dedicado (ficticio)",
+        "dominios_en_ip": [
+          "s2.pelotaya.test"
+        ],
+        "dominios_ajenos": [],
+        "ip_compartida": false,
+        "motivo": "IP dedicada al sitio pirata"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "ip",
+          "objetivo": "203.0.113.11"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "s2.pelotaya.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "ip",
+          "objetivo": "203.0.113.11"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "s2.pelotaya.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "s2.pelotaya.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "ip",
+          "objetivo": "203.0.113.11"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "s2.pelotaya.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "tipo": "dns_pasivo",
+          "dominio": "s2.pelotaya.test",
+          "ip": "203.0.113.11",
+          "consulta_min": 2.02,
+          "sha256_respuesta": "9a3831f635cd3c7cf58a68c0fff85816cf56436f1d9ffa1f5c353010c5d5004c"
+        },
+        {
+          "deteccion": "D-0014",
+          "minuto": 37.5,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s2.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "f27a4a5fba9cfc873c9750f4186c354c253b9dcb696de7b8c2bc789e0217ebe7",
+          "captura_min": 37.5,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "52835b7bc5d0b8a96aafbd52778785def00dba3b440cb4597cf26821de82c285"
+        },
+        {
+          "deteccion": "D-0018",
+          "minuto": 47.5,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s2.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "9599883ea344a37cae84b60cf0843560e94ab7e4ffcc20df5a6c594be29ab3ec",
+          "captura_min": 47.5,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "8f3e511f18c3d7af7922fff5d6dc60b9a676fb3c474b207c931920975900825c"
+        },
+        {
+          "deteccion": "D-0023",
+          "minuto": 57.5,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s2.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "3ebbbcfccd44e067e86b258e0f6109a02ff5fdaed5907569135ce620a64e85d1",
+          "captura_min": 57.5,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "c2641792fb89658ae5850db97ae45930a5aadc9466735b375d4750d249473d48"
+        },
+        {
+          "deteccion": "D-0027",
+          "minuto": 67.5,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s2.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "7f3481262aaded72da331ecf29ed6d93be271a9d919919f5305bb092071849c6",
+          "captura_min": 67.5,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "078e59285e77658cd719fb15d594b8908d1be470e12caa294e3cb7de7eb40930"
+        }
+      ],
+      "decision": {
+        "juez_id": "jueza-laura-ficticia",
+        "juzgado_id": "jg-centro-3",
+        "aprueba": true,
+        "minuto": 3.7,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "01fa18f9bae348ba5749f9c6602577b926eec0f472471596e77a7673bbcb986b"
+      },
+      "ordenes": [
+        "ord-aurora-0026",
+        "ord-aurora-0027",
+        "ord-andina-0028",
+        "ord-andina-0029",
+        "ord-valle-0030",
+        "ord-cumbre-0031",
+        "ord-cumbre-0032",
+        "ord-cumbre-0034"
+      ],
+      "ratificado_por": [
+        "juez-martin-ejemplo"
+      ],
+      "tipo_sellado": "preventivo",
+      "n_evidencia_sellada": 1,
+      "sello": "5aaf1a73262baf4f00ec530a38e1c09d1e0be7038841253889c2d99b8f6894b3",
+      "notificado_min": 2.02
+    },
+    {
+      "id": "EXP-2026-0033",
+      "tipo": "deteccion",
+      "creado_min": 6.02,
+      "estado": "aprobado",
+      "sitio": "golazo-libre.test",
+      "host_stream": "live.golazo-libre.test",
+      "ip_servidor": "198.51.100.20",
+      "asn": 64610,
+      "marca": "LP26-PRA-OFI-S077310",
+      "origen": null,
+      "clasificacion": "marca de agua de la señal oficial (Señal oficial del titular (plataforma propia)) en un dominio no autorizado",
+      "riesgo_colateral": {
+        "ip": "198.51.100.20",
+        "asn": 64610,
+        "organizacion": "NubeRápida CDN (ficticia)",
+        "dominios_en_ip": [
+          "live.golazo-libre.test",
+          "tienda-mate-y-yerba.test",
+          "noticias-del-valle.test",
+          "turismo-cafayate.example",
+          "radio-comunitaria-fm.test",
+          "municipio-ejemplo.example",
+          "biblioteca-popular-norte.test",
+          "delivery-salta-ejemplo.test",
+          "clinica-veterinaria-sol.test",
+          "inmobiliaria-ejemplo.test",
+          "academia-de-ingles.test",
+          "feria-artesanal.example"
+        ],
+        "dominios_ajenos": [
+          "academia-de-ingles.test",
+          "biblioteca-popular-norte.test",
+          "clinica-veterinaria-sol.test",
+          "delivery-salta-ejemplo.test",
+          "feria-artesanal.example",
+          "inmobiliaria-ejemplo.test",
+          "municipio-ejemplo.example",
+          "noticias-del-valle.test",
+          "radio-comunitaria-fm.test",
+          "tienda-mate-y-yerba.test",
+          "turismo-cafayate.example"
+        ],
+        "ip_compartida": true,
+        "motivo": "la IP aloja otros sitios: academia-de-ingles.test, biblioteca-popular-norte.test, clinica-veterinaria-sol.test, delivery-salta-ejemplo.test, feria-artesanal.example…"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "live.golazo-libre.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "live.golazo-libre.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "live.golazo-libre.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "live.golazo-libre.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "deteccion": "D-0003",
+          "minuto": 6.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "485b937379e696ae00920a738d03b3062ef615309dda5a10b2eb90a001f6665e",
+          "captura_min": 6.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "0b7a6f2ecbc6c539e35b254eab06075fe94f60048c6b6fa0f1cda76b9ce8746a"
+        },
+        {
+          "deteccion": "D-0006",
+          "minuto": 16.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "476df8927ad67696430a56012f698616b16ce9dd741a912c9b0e2ab2ee65fa4d",
+          "captura_min": 16.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "3228a26c083f2128ff5e00f30ddb7aa5dbc579ce2d801fc16e608c3e05861f7f"
+        },
+        {
+          "deteccion": "D-0010",
+          "minuto": 26.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "335deef52e9f3ea119b518bc373389011d542ae75000b76acd3e92c28299a1d4",
+          "captura_min": 26.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "1b447bf19dd465acafd695476e0dc383fe46930a70c3dceab7d62da9d345cc7a"
+        },
+        {
+          "deteccion": "D-0013",
+          "minuto": 36.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "95c46e4fc8389fba2285acb68bfbf5e56a7bfdc820f9073c61c11c84870e727a",
+          "captura_min": 36.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "45f07b8e00e193a81162b04acda1c45d072157b97bebf11140e2963f4a5abadd"
+        },
+        {
+          "deteccion": "D-0017",
+          "minuto": 46.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "f1d7e43b8cac01917e90cff9a6cbd802f0ee31622476c0a4ab969c9d3c3ac744",
+          "captura_min": 46.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "da4a6b79812087009daae77e8447ec1cba5950c307a33e1aaf18354ab7de426b"
+        },
+        {
+          "deteccion": "D-0022",
+          "minuto": 56.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "ffeddb9173b097b7e760a1388ab086fed9bd5eb4b3c6fa931a716d7f029c5514",
+          "captura_min": 56.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "de4f9c765c78e8e86d753dc539d70655a522785d4086f7f5a9e96c9f2d49636b"
+        },
+        {
+          "deteccion": "D-0026",
+          "minuto": 66.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "851ec43052c6e057945fb369b9a127034f6c7ce58ec2dcc12ded6e0aa645c611",
+          "captura_min": 66.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "a41325e45c62ca1838bdd74af959adc6a902dc367e3df3df6d5bcbf5b2dc76da"
+        },
+        {
+          "deteccion": "D-0031",
+          "minuto": 76.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "64ff450fa777ea9ca2b7ce36c90bfe3c6f89a7254c091aec2db746371e969985",
+          "captura_min": 76.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "a703cccb6311363be5a6f4bb85b800eb1ba7fa6a4e621d8732b968404e47205c"
+        },
+        {
+          "deteccion": "D-0036",
+          "minuto": 86.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "a37d351e9aea24382ed7c483772536ec713791b0e769b9bf87e0c44b1ef40432",
+          "captura_min": 86.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "c9267e087b8ca1a5f5111904dd03e9285edba6c46cdc092877b2176d789eb71f"
+        },
+        {
+          "deteccion": "D-0040",
+          "minuto": 96.0,
+          "pagina": "https://golazo-libre.test/partido",
+          "stream_url": "https://live.golazo-libre.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S077310",
+          "sha256_captura": "cc4ea1fc07084930b6dd357bfc3adb38dc42ccd75433e4d6a896233618219572",
+          "captura_min": 96.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/golazolibre/status/2207",
+              "minuto": 4.0
+            },
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/golazo-hoy",
+              "minuto": 5.0
+            }
+          ],
+          "sha256_deteccion": "8393df5184e8e6a711115896824177f0e6ad3eb447a9da31f41d86cda69556e7"
+        }
+      ],
+      "decision": {
+        "juez_id": "jueza-laura-ficticia",
+        "juzgado_id": "jg-centro-3",
+        "aprueba": true,
+        "minuto": 7.06,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "87bd21f1e6458ec9c6e64bb1d1ec94352e733b905f76551b7e4fc8e29ef951c3"
+      },
+      "ordenes": [
+        "ord-aurora-0036",
+        "ord-andina-0037",
+        "ord-valle-0038",
+        "ord-cumbre-0039"
+      ],
+      "ratificado_por": [
+        "juez-martin-ejemplo"
+      ],
+      "tipo_sellado": "deteccion",
+      "n_evidencia_sellada": 1,
+      "sello": "b661873cdeaddb0655aaa81ea2b6e80c24309818b2225532f216b600d59080c7",
+      "notificado_min": 6.02,
+      "predicho": true
+    },
+    {
+      "id": "EXP-2026-0040",
+      "tipo": "deteccion",
+      "creado_min": 9.03,
+      "estado": "aprobado",
+      "sitio": "verpartido-hd.test",
+      "host_stream": "tv.verpartido-hd.test",
+      "ip_servidor": "192.0.2.50",
+      "asn": 64620,
+      "marca": "LP26-PRA-OFI-S010457",
+      "origen": null,
+      "clasificacion": "marca de agua de la señal oficial (Señal oficial del titular (plataforma propia)) en un dominio no autorizado",
+      "riesgo_colateral": {
+        "ip": "192.0.2.50",
+        "asn": 64620,
+        "organizacion": "Pampa Web Hosting Compartido (ficticio)",
+        "dominios_en_ip": [
+          "tv.verpartido-hd.test",
+          "verpartido-hd.test",
+          "panaderia-la-espiga.test",
+          "club-atletico-barrio-norte.test",
+          "escuela-tecnica-12.test",
+          "estudio-contable-ruiz.test"
+        ],
+        "dominios_ajenos": [
+          "club-atletico-barrio-norte.test",
+          "escuela-tecnica-12.test",
+          "estudio-contable-ruiz.test",
+          "panaderia-la-espiga.test"
+        ],
+        "ip_compartida": true,
+        "motivo": "la IP aloja otros sitios: club-atletico-barrio-norte.test, escuela-tecnica-12.test, estudio-contable-ruiz.test, panaderia-la-espiga.test"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "tv.verpartido-hd.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "tv.verpartido-hd.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "tv.verpartido-hd.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "tv.verpartido-hd.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "deteccion": "D-0004",
+          "minuto": 9.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "b3e5dd0f6977847eea9f86d67cc43e2d8b9aa378b92a131fa358e10db718b796",
+          "captura_min": 9.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "4c83b14ae262fefa8d0b67b23914284d88d4507ab2ea49eb057bb22ab8f44087"
+        },
+        {
+          "deteccion": "D-0007",
+          "minuto": 19.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "bc6eae3469b9a893a1953f7834cc86e2c2294d13e269f0abfcbc299e5d67843e",
+          "captura_min": 19.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "7ffe6ba2a832b8c4bc2e6526a811d5ea01b379d694d9472eaacb8adbc990f8dc"
+        },
+        {
+          "deteccion": "D-0011",
+          "minuto": 29.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "ab0f61a33b7dfbb0ea3f5383224ad66b454c68aa7df3c4f9c8399972db3d9960",
+          "captura_min": 29.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "85a6edb0992521e6f998da46989b04f822189885f4c9868b106a4e624c027590"
+        },
+        {
+          "deteccion": "D-0015",
+          "minuto": 39.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "b30c8546299a611c6f1578c83537ec1c82c7d54a63bf550ca743bddfc5dce3e5",
+          "captura_min": 39.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "c6ec596417653e240ccbd8c5be64b743e639c6b1409714d32dd338503014b2b6"
+        },
+        {
+          "deteccion": "D-0019",
+          "minuto": 49.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "aab0acb53f8cc1ca0f371d7ccdded80c2972c8c8349d25105769ea50e1a420b1",
+          "captura_min": 49.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "c98c804169b9839da75ea6461695caff0bd8b7e7332b3c736766eabc2b9035e9"
+        },
+        {
+          "deteccion": "D-0024",
+          "minuto": 59.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "4455adee60ab1cc6890589018efa0093e614a02f04d56e9d5fbd5e8daed6b37c",
+          "captura_min": 59.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "e409c65905c522b362b334810b288e2ce165eb915ab364a874b513f9974863f4"
+        },
+        {
+          "deteccion": "D-0028",
+          "minuto": 69.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "44aea620b8e7a89ec6207b5b1e5f210e4a5dd6664c158ffda8220db360fbab46",
+          "captura_min": 69.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "771e0670176e8b6891fecfbea03bf0c30e1d1bc411fe87470a341dcb7020581a"
+        },
+        {
+          "deteccion": "D-0032",
+          "minuto": 79.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "b5df180b02c8d417486b97d0c67135a95a88419794a652ce05e3ddb83452ebd0",
+          "captura_min": 79.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "f51c004ff2d55505a7d7e7b3ff21e623ed45f8706dac009f27fe41aeb79a9b33"
+        },
+        {
+          "deteccion": "D-0037",
+          "minuto": 89.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "b8c2ceda8fa5a16f5dbf1831e22ee8d57915ee7f29ee666bd1373a01408b25ab",
+          "captura_min": 89.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "4119233bb8cae69eb0e33e5da22b9ed0fd12bbf9bc4bda06f8a94d86a24db0fc"
+        },
+        {
+          "deteccion": "D-0041",
+          "minuto": 99.0,
+          "pagina": "https://verpartido-hd.test/vivo",
+          "stream_url": "https://tv.verpartido-hd.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S010457",
+          "sha256_captura": "06062567f79111d4d3429ba8312b212bdfe69b8b2e37022449adaaf708ebdb8a",
+          "captura_min": 99.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "telegram",
+              "url": "https://t.example/verpartidohd",
+              "minuto": 7.0
+            }
+          ],
+          "sha256_deteccion": "09baed649ad2b9f879e6b882c7beb57efd91f6e3ecb8e04a84df864aad6f6ece"
+        }
+      ],
+      "decision": {
+        "juez_id": "jueza-laura-ficticia",
+        "juzgado_id": "jg-centro-3",
+        "aprueba": true,
+        "minuto": 10.01,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "ffadd53b1d67f8ab30dc27b0523a70a59801b01284490509287b644e16356bf5"
+      },
+      "ordenes": [
+        "ord-aurora-0042",
+        "ord-andina-0043",
+        "ord-valle-0044",
+        "ord-cumbre-0045",
+        "ord-cumbre-0050"
+      ],
+      "ratificado_por": [
+        "juez-martin-ejemplo"
+      ],
+      "tipo_sellado": "deteccion",
+      "n_evidencia_sellada": 1,
+      "sello": "4d33147bf8f18328e248340523c43134a68d0d94a1a8482a645aad6ad5f1aa0e",
+      "notificado_min": 9.03,
+      "predicho": true
+    },
+    {
+      "id": "EXP-2026-0041",
+      "tipo": "preventivo",
+      "creado_min": 9.03,
+      "estado": "aprobado",
+      "sitio": "verpartido-hd.test",
+      "host_stream": "verpartido-hd.test",
+      "ip_servidor": "192.0.2.50",
+      "asn": 64620,
+      "marca": "LP26-PRA-OFI-S010457",
+      "origen": "EXP-2026-0040",
+      "clasificacion": "infraestructura vinculada a verpartido-hd.test (expediente EXP-2026-0040): el dominio verpartido-hd.test del mismo sitio figura en DNS pasivo en 192.0.2.50. Bloqueo preventivo, sin stream detectado aún.",
+      "riesgo_colateral": {
+        "ip": "192.0.2.50",
+        "asn": 64620,
+        "organizacion": "Pampa Web Hosting Compartido (ficticio)",
+        "dominios_en_ip": [
+          "tv.verpartido-hd.test",
+          "verpartido-hd.test",
+          "panaderia-la-espiga.test",
+          "club-atletico-barrio-norte.test",
+          "escuela-tecnica-12.test",
+          "estudio-contable-ruiz.test"
+        ],
+        "dominios_ajenos": [
+          "club-atletico-barrio-norte.test",
+          "escuela-tecnica-12.test",
+          "estudio-contable-ruiz.test",
+          "panaderia-la-espiga.test"
+        ],
+        "ip_compartida": true,
+        "motivo": "la IP aloja otros sitios: club-atletico-barrio-norte.test, escuela-tecnica-12.test, estudio-contable-ruiz.test, panaderia-la-espiga.test"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "verpartido-hd.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "verpartido-hd.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "verpartido-hd.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "verpartido-hd.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "tipo": "dns_pasivo",
+          "dominio": "verpartido-hd.test",
+          "ip": "192.0.2.50",
+          "consulta_min": 9.03,
+          "sha256_respuesta": "c300eb8d433a561df6db85e5e934a72dc23b138fd3c597d706119a2867583891"
+        }
+      ],
+      "decision": {
+        "juez_id": "jueza-laura-ficticia",
+        "juzgado_id": "jg-centro-3",
+        "aprueba": true,
+        "minuto": 10.01,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "47f27ebc385abc87ca2cfda6ec99157bdba9ad5691bd18f5fb33fe03c7a9985a"
+      },
+      "ordenes": [
+        "ord-aurora-0046",
+        "ord-andina-0047",
+        "ord-valle-0048",
+        "ord-cumbre-0049"
+      ],
+      "ratificado_por": [],
+      "tipo_sellado": "preventivo",
+      "n_evidencia_sellada": 1,
+      "sello": "b55faa5f495e56225933c564f5d9adc29980fed86f54b298466b4d8597dfc7f7",
+      "notificado_min": 9.03
+    },
+    {
+      "id": "EXP-2026-0051",
+      "tipo": "deteccion",
+      "creado_min": 55.0,
+      "estado": "aprobado",
+      "sitio": "tribuna-pirata.test",
+      "host_stream": "x9.tribuna-pirata.test",
+      "ip_servidor": "203.0.113.40",
+      "asn": 64600,
+      "marca": "LP26-PRA-OFI-S063002",
+      "origen": null,
+      "clasificacion": "marca de agua de la señal oficial (Señal oficial del titular (plataforma propia)) en un dominio no autorizado",
+      "riesgo_colateral": {
+        "ip": "203.0.113.40",
+        "asn": 64600,
+        "organizacion": "Bruma Hosting Dedicado (ficticio)",
+        "dominios_en_ip": [
+          "x9.tribuna-pirata.test"
+        ],
+        "dominios_ajenos": [],
+        "ip_compartida": false,
+        "motivo": "IP dedicada al sitio pirata"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "ip",
+          "objetivo": "203.0.113.40"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "x9.tribuna-pirata.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "ip",
+          "objetivo": "203.0.113.40"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "x9.tribuna-pirata.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "x9.tribuna-pirata.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "ip",
+          "objetivo": "203.0.113.40"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "x9.tribuna-pirata.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "deteccion": "D-0021",
+          "minuto": 55.0,
+          "pagina": "https://tribuna-pirata.test/ver",
+          "stream_url": "https://x9.tribuna-pirata.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S063002",
+          "sha256_captura": "5e3d43564f3ab28fd6d042ea219ea19c302093798435a7d197b3f64092d6a6e6",
+          "captura_min": 55.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/tribuna-vip",
+              "minuto": 53.0
+            },
+            {
+              "red": "telegram",
+              "url": "https://t.example/tribunapirata",
+              "minuto": 54.0
+            }
+          ],
+          "sha256_deteccion": "3e144100bb3e17c4eb53dd0a400336ed5c61f40ac246b80eb2f235a744b4b9c3"
+        },
+        {
+          "deteccion": "D-0025",
+          "minuto": 65.0,
+          "pagina": "https://tribuna-pirata.test/ver",
+          "stream_url": "https://x9.tribuna-pirata.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S063002",
+          "sha256_captura": "2f5e151797e1ace2fc6048b7daf4ddf1538383bce9950389dc760c673bbb0562",
+          "captura_min": 65.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/tribuna-vip",
+              "minuto": 53.0
+            },
+            {
+              "red": "telegram",
+              "url": "https://t.example/tribunapirata",
+              "minuto": 54.0
+            }
+          ],
+          "sha256_deteccion": "52ab129e6163cbefd369c8e168be99131532a18c345e9920fbbd97134f57c738"
+        },
+        {
+          "deteccion": "D-0030",
+          "minuto": 75.0,
+          "pagina": "https://tribuna-pirata.test/ver",
+          "stream_url": "https://x9.tribuna-pirata.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S063002",
+          "sha256_captura": "6777a82ff42fdb4928359b6402df0798e8325676c507aa47e5e3d43e7eeadf5f",
+          "captura_min": 75.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/tribuna-vip",
+              "minuto": 53.0
+            },
+            {
+              "red": "telegram",
+              "url": "https://t.example/tribunapirata",
+              "minuto": 54.0
+            }
+          ],
+          "sha256_deteccion": "db3098cdd64b2373ef634cd1d794d387a22ecf4857fbb10cb931da6607e957f7"
+        }
+      ],
+      "decision": {
+        "juez_id": "juez-martin-ejemplo",
+        "juzgado_id": "jg-norte-1",
+        "aprueba": true,
+        "minuto": 56.02,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "4b29bb117c0c89b697457feeaf1d8a62e29a000bb369ef3306b0f76bd3aca0ab"
+      },
+      "ordenes": [
+        "ord-aurora-0053",
+        "ord-aurora-0054",
+        "ord-andina-0055",
+        "ord-andina-0056",
+        "ord-valle-0057",
+        "ord-cumbre-0058",
+        "ord-cumbre-0059"
+      ],
+      "ratificado_por": [],
+      "tipo_sellado": "deteccion",
+      "n_evidencia_sellada": 1,
+      "sello": "9a783238b75d1534a05275c2f9145ad5f9841b299db5266917fc6803df1603f3",
+      "notificado_min": 55.0,
+      "predicho": true
+    },
+    {
+      "id": "EXP-2026-0052",
+      "tipo": "confirmado",
+      "creado_min": 55.0,
+      "estado": "aprobado",
+      "sitio": "tribuna-pirata.test",
+      "host_stream": "x10.tribuna-pirata.test",
+      "ip_servidor": "203.0.113.41",
+      "asn": 64600,
+      "marca": "LP26-PRA-OFI-S063002",
+      "origen": "EXP-2026-0051",
+      "clasificacion": "infraestructura vinculada a tribuna-pirata.test (expediente EXP-2026-0051): el dominio x10.tribuna-pirata.test del mismo sitio figura en DNS pasivo en 203.0.113.41. Bloqueo preventivo, sin stream detectado aún.",
+      "riesgo_colateral": {
+        "ip": "203.0.113.41",
+        "asn": 64600,
+        "organizacion": "Bruma Hosting Dedicado (ficticio)",
+        "dominios_en_ip": [
+          "x10.tribuna-pirata.test"
+        ],
+        "dominios_ajenos": [],
+        "ip_compartida": false,
+        "motivo": "IP dedicada al sitio pirata"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "ip",
+          "objetivo": "203.0.113.41"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "x10.tribuna-pirata.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "ip",
+          "objetivo": "203.0.113.41"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "x10.tribuna-pirata.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "x10.tribuna-pirata.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "ip",
+          "objetivo": "203.0.113.41"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "x10.tribuna-pirata.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "tipo": "dns_pasivo",
+          "dominio": "x10.tribuna-pirata.test",
+          "ip": "203.0.113.41",
+          "consulta_min": 55.0,
+          "sha256_respuesta": "62c14da57ba92e4421b8312218bd0a8b26c98eddaf1fb508fb2d18a39deb0ead"
+        },
+        {
+          "deteccion": "D-0034",
+          "minuto": 82.0,
+          "pagina": "https://tribuna-pirata.test/ver",
+          "stream_url": "https://x10.tribuna-pirata.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S063002",
+          "sha256_captura": "767fccc3e8c85585c487925e6d3b8f51e3dd4d796d61cebb11fc2b6e9b2828ee",
+          "captura_min": 82.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/tribuna-vip",
+              "minuto": 53.0
+            },
+            {
+              "red": "telegram",
+              "url": "https://t.example/tribunapirata",
+              "minuto": 54.0
+            }
+          ],
+          "sha256_deteccion": "8b2c1f6b2e29699180c00233ec639c6692750400f360fb03985776303966134a"
+        },
+        {
+          "deteccion": "D-0039",
+          "minuto": 92.0,
+          "pagina": "https://tribuna-pirata.test/ver",
+          "stream_url": "https://x10.tribuna-pirata.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S063002",
+          "sha256_captura": "251796ec5a50f39186ddc58702ae2b6c09f2ac2101528d40e71a695c08fb41dd",
+          "captura_min": 92.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/tribuna-vip",
+              "minuto": 53.0
+            },
+            {
+              "red": "telegram",
+              "url": "https://t.example/tribunapirata",
+              "minuto": 54.0
+            }
+          ],
+          "sha256_deteccion": "623a2f04e4d923509eb1dc533534412b03a2a0b19013f9beee8fa0170cbdf80e"
+        },
+        {
+          "deteccion": "D-0043",
+          "minuto": 102.0,
+          "pagina": "https://tribuna-pirata.test/ver",
+          "stream_url": "https://x10.tribuna-pirata.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S063002",
+          "sha256_captura": "cdae9850e2f0202d95cda22aa487785987580ad8d3b40498410ba8c120fd09bd",
+          "captura_min": 102.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "discord",
+              "url": "https://discord.example/invite/tribuna-vip",
+              "minuto": 53.0
+            },
+            {
+              "red": "telegram",
+              "url": "https://t.example/tribunapirata",
+              "minuto": 54.0
+            }
+          ],
+          "sha256_deteccion": "f0d99bf3fb5592b220cf428aea113589f1386a802d4a47963a56530040859afb"
+        }
+      ],
+      "decision": {
+        "juez_id": "juez-martin-ejemplo",
+        "juzgado_id": "jg-norte-1",
+        "aprueba": true,
+        "minuto": 56.02,
+        "motivo": "aprobado por el juez de turno",
+        "firma_decision": "82b2859afa0935d3736a56570a71480e6418490a0c21876d26e498acc9604e86"
+      },
+      "ordenes": [
+        "ord-aurora-0060",
+        "ord-aurora-0061",
+        "ord-andina-0062",
+        "ord-andina-0063",
+        "ord-valle-0064",
+        "ord-cumbre-0065",
+        "ord-cumbre-0066"
+      ],
+      "ratificado_por": [],
+      "tipo_sellado": "preventivo",
+      "n_evidencia_sellada": 1,
+      "sello": "f7ce890ae5ccb0809367f12396cc573d66d22016452b70207847606808239083",
+      "notificado_min": 55.0
+    },
+    {
+      "id": "EXP-2026-0067",
+      "tipo": "deteccion",
+      "creado_min": 71.02,
+      "estado": "aprobado",
+      "sitio": "pelotaya.test",
+      "host_stream": "s3.pelotaya.test",
+      "ip_servidor": "198.51.100.77",
+      "asn": 64630,
+      "marca": "LP26-PRA-OFI-S048211",
+      "origen": null,
+      "clasificacion": "marca de agua de la señal oficial (Señal oficial del titular (plataforma propia)) en un dominio no autorizado",
+      "riesgo_colateral": {
+        "ip": "198.51.100.77",
+        "asn": 64630,
+        "organizacion": "Servidores Litoral (ficticio)",
+        "dominios_en_ip": [
+          "s3.pelotaya.test",
+          "espejo.pelotaya.test"
+        ],
+        "dominios_ajenos": [],
+        "ip_compartida": false,
+        "motivo": "IP dedicada al sitio pirata"
+      },
+      "plan": [
+        {
+          "proveedor": "aurora",
+          "tipo": "ip",
+          "objetivo": "198.51.100.77"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        },
+        {
+          "proveedor": "aurora",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "ip",
+          "objetivo": "198.51.100.77"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        },
+        {
+          "proveedor": "andina",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        },
+        {
+          "proveedor": "valle",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "ip",
+          "objetivo": "198.51.100.77"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "s3.pelotaya.test"
+        },
+        {
+          "proveedor": "cumbre",
+          "tipo": "dominio",
+          "objetivo": "espejo.pelotaya.test"
+        }
+      ],
+      "vence_min": 105,
+      "evidencia": [
+        {
+          "deteccion": "D-0029",
+          "minuto": 71.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s3.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "d34e0c24d029af9fd4e51398efa7a3f96d8b96fc6f67cb145f9b285968d8e227",
+          "captura_min": 71.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "cfb5679186f371577db7b4006446dd24f355e292538e599536c3691175a47857"
+        },
+        {
+          "deteccion": "D-0033",
+          "minuto": 81.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s3.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "2659f28233bf3a0be71a2de09bb21b5d831b9b3f6014b196908685cfd63107ab",
+          "captura_min": 81.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "bef5d55b782ff7b82daa8e186cc38c02b774833a69c8c71e34c481d2c488a293"
+        },
+        {
+          "deteccion": "D-0038",
+          "minuto": 91.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s3.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "0aeff816862f08f953b136ce68fef8cbe089759c6f1a8d7987049d5039604926",
+          "captura_min": 91.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "8acf758fd0d1c468f4d837e9286fc731ff378270f376db50715e366f6711b37d"
+        },
+        {
+          "deteccion": "D-0042",
+          "minuto": 101.0,
+          "pagina": "https://pelotaya.test/en-vivo",
+          "stream_url": "https://s3.pelotaya.test/hls/en-vivo/index.m3u8",
+          "marca_de_agua": "LP26-PRA-OFI-S048211",
+          "sha256_captura": "5d37f9ff4e0419484ce90efbc45e31fc9d9aed994aedf844fe01b0bba0e92188",
+          "captura_min": 101.0,
+          "formato": "mpegts",
+          "duracion_seg": 6,
+          "promocion": [
+            {
+              "red": "x",
+              "url": "https://x.example/futbolya_ok/status/1001",
+              "minuto": 1.0
+            }
+          ],
+          "sha256_deteccion": "421f265bd8cebd7cd8dbf899e334936bab655be4c82daef18e9002a73f5a4fd4"
+        }
+      ],
+      "decision": {
+        "juez_id": "juez-martin-ejemplo",
+        "juzgado_id": "jg-norte-1",
+        "aprueba": true,
+        "minuto": 71.02,
+        "motivo": "ampliación de la orden marco EXP-2026-0001 (mismo sitio o misma marca de agua)",
+        "firma_decision": "dc8108b2eb59c8eb1e8a62753d21f70a34140b38e6311808da8655af356f392f"
+      },
+      "ordenes": [
+        "ord-aurora-0068",
+        "ord-aurora-0069",
+        "ord-aurora-0070",
+        "ord-andina-0071",
+        "ord-andina-0072",
+        "ord-andina-0073",
+        "ord-valle-0074",
+        "ord-valle-0075",
+        "ord-cumbre-0076",
+        "ord-cumbre-0077",
+        "ord-cumbre-0078",
+        "ord-cumbre-0079"
+      ],
+      "ratificado_por": [],
+      "tipo_sellado": "deteccion",
+      "n_evidencia_sellada": 1,
+      "sello": "9801800e5cc43f61b33eb13d41f0819375bdfc85028439d522fc7436693ee3ad",
+      "notificado_min": 71.02,
+      "orden_marco": "EXP-2026-0001",
+      "predicho": true
+    }
+  ],
+  "descartes": [
+    {
+      "deteccion": "D-0002",
+      "clase": "legitima",
+      "motivo": "licenciatario autorizado (Canal Norte TV (ficticio)) en su propio dominio",
+      "host": "envivo.canalnorte.test",
+      "ip": "192.0.2.10"
+    },
+    {
+      "deteccion": "D-0008",
+      "clase": "descartada",
+      "motivo": "la marca LP25-F03-OFI-S102934 no corresponde a este partido",
+      "host": "vod.resumenes-deportivos.test",
+      "ip": "198.51.100.90"
+    },
+    {
+      "deteccion": "D-0016",
+      "clase": "legitima",
+      "motivo": "licenciatario autorizado (Canal Norte TV (ficticio)) en su propio dominio",
+      "host": "envivo.canalnorte.test",
+      "ip": "192.0.2.10"
+    },
+    {
+      "deteccion": "D-0020",
+      "clase": "descartada",
+      "motivo": "la marca LP25-F03-OFI-S102934 no corresponde a este partido",
+      "host": "vod.resumenes-deportivos.test",
+      "ip": "198.51.100.90"
+    },
+    {
+      "deteccion": "D-0035",
+      "clase": "legitima",
+      "motivo": "licenciatario autorizado (Canal Norte TV (ficticio)) en su propio dominio",
+      "host": "envivo.canalnorte.test",
+      "ip": "192.0.2.10"
+    }
+  ]
+}
