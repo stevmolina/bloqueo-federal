@@ -43,6 +43,15 @@ a{color:inherit}.in{max-width:1120px;margin:0 auto;padding:0 40px}
 .close{background:var(--ink);color:#fff;border-radius:30px;padding:56px;margin-top:80px}
 .close p{font-size:34px;line-height:1.15;letter-spacing:-.03em;font-weight:600;margin:0 0 28px;max-width:820px}
 footer{padding:40px 0 70px;color:var(--mist);font-size:14px}
+.how{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.rules{margin:0;padding:0;list-style:none}.rules li{padding:16px 0;border-bottom:1px solid var(--line)}.rules li:first-child{border-top:1px solid var(--line)}
+.rules b{display:block;font-weight:600;margin-bottom:2px}.rules span{color:#46475e;font-size:16px}
+.cmp h3{font-size:15px;font-weight:500;color:var(--mist);margin:0 0 18px}
+.opt{margin-bottom:22px}.opt .t{display:flex;justify-content:space-between;font-size:16px;margin-bottom:8px}.opt .t span{color:var(--mist);font-size:14px}
+.track{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.track i{display:block;height:100%;border-radius:5px;background:#c7c8d2}
+.note{font-size:13px;margin-top:6px}.note.bad{color:#c2402f}.note.good{color:var(--ok)}.opt.win .t{font-weight:600}.opt.win .track i{background:var(--ink)}
+.cmp p{font-size:14px;color:var(--mist);margin:22px 0 0}
+@media(max-width:900px){.how{grid-template-columns:1fr;gap:40px}}
 @media(max-width:900px){.in{padding:0 22px}.h h1{font-size:42px}.grid4,.three,.steps,.law{grid-template-columns:1fr 1fr}.big{font-size:44px}.s h2{font-size:32px}.close p{font-size:24px}.close{padding:32px}}
 @media(max-width:560px){.grid4,.three,.steps,.law{grid-template-columns:1fr}}
 </style>
@@ -86,6 +95,27 @@ footer{padding:40px 0 70px;color:var(--mist);font-size:14px}
   <div><span>Paso 1</span><b>Detecta y sella</b><p>Prueba que es la señal del partido, identifica el servidor y guarda la evidencia con una huella que no se puede alterar.</p></div>
   <div><span>Paso 2</span><b>El juez firma</b><p>Solo el juez de turno, con su usuario. Si el servidor es compartido, se bloquea solo el dominio.</p></div>
   <div><span>Paso 3</span><b>Todos bloquean</b><p>Cada proveedor recibe el bloqueo que acepta, con reintento si falla. Al terminar el partido, se levanta solo.</p></div>
+ </div>
+</div></section>
+
+<section class=s id=estrategia style="padding-top:0"><div class=in>
+ <h2>Cómo decide qué bloquear.</h2>
+ <p class=lead>Cuatro reglas simples. Las elegimos probando más de diez estrategias contra el verificador oficial.</p>
+ <div class=how>
+  <ul class=rules>
+   <li><b>Solo la señal del partido</b><span>Si la marca de agua no es la oficial, o es un licenciatario en su propio sitio, no se pide nada.</span></li>
+   <li><b>Servidor compartido, solo el dominio</b><span>Miramos qué otros sitios viven en ese servidor. Si hay inocentes, bloqueamos el nombre del sitio y no la dirección del servidor.</span></li>
+   <li><b>Servidor exclusivo, doble bloqueo</b><span>Si el servidor es solo del pirata, pedimos la dirección y el nombre: si uno falla, el otro sigue.</span></li>
+   <li><b>Adelantarse a la mudanza</b><span>Buscamos los servidores de respaldo del mismo sitio y el juez los aprueba junto al caso. Cuando el pirata se muda, ya estaba bloqueado.</span></li>
+  </ul>
+  <div class=cmp>
+   <h3>Tiempo que el pirata siguió visible, en el partido de práctica</h3>
+   <div class=opt><div class=t>Cliente de ejemplo<span>86,5 %</span></div><div class=track><i style="width:86.5%"></i></div></div>
+   <div class=opt><div class=t>Bloquear siempre la dirección del servidor<span>6 %</span></div><div class=track><i style="width:6%"></i></div><div class="note bad">5 bloqueos tocaron sitios inocentes</div></div>
+   <div class=opt><div class=t>Bloquear siempre el nombre del sitio<span>3,3 %</span></div><div class=track><i style="width:3.3%"></i></div></div>
+   <div class="opt win"><div class=t>Las cuatro reglas juntas<span>0,9 %</span></div><div class=track><i style="width:0.9%;min-width:6px"></i></div><div class="note good">0 sitios inocentes tocados</div></div>
+   <p>Medido con el verificador oficial del desafío. La comparación completa está en el repositorio.</p>
+  </div>
  </div>
 </div></section>
 
