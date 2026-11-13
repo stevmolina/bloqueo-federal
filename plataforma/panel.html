@@ -1,169 +1,142 @@
 <!doctype html><html lang=es><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
-<title>Bloqueo Federal · Juez de turno</title>
+<title>Bloqueo Federal</title>
 <link rel=preconnect href="https://fonts.googleapis.com"><link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel=stylesheet>
 <style>
-:root{--night:#0d0d1a;--ink:#191932;--lime:#d4f7a6;--lime2:#a3e35b;--paper:#f7f7f3;--red:#ff5a4e;--mist:#6b6d85;--line:#e6e6df;--white:#fff;--ok:#2f8f3a;--warn:#c27a00}
-*{box-sizing:border-box}html,body{margin:0}body{background:var(--paper);color:var(--ink);font:15px/1.5 Sora,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
+:root{--night:#0d0d1a;--ink:#191932;--lime:#d4f7a6;--paper:#f7f7f3;--red:#ff5a4e;--mist:#7a7c92;--line:#e8e8e2;--ok:#2f8f3a;--amber:#e3a72f}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 Sora,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:3px solid #a3e35b;outline-offset:3px;border-radius:6px}
 /* top bar */
-.top{background:var(--night);color:#fff;display:flex;align-items:center;gap:16px;padding:14px 28px;flex-wrap:nowrap}
-#partido{max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;letter-spacing:-.02em}
-.mark{width:30px;height:30px;border-radius:9px;background:var(--lime);color:var(--night);display:grid;place-items:center}
-.mark svg{width:18px;height:18px}
-.clock{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border-radius:999px;padding:6px 14px 6px 10px;font-size:14px}
-.clock b{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.live{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(255,90,78,.6);animation:p 1.6s infinite}
-@keyframes p{70%{box-shadow:0 0 0 9px rgba(255,90,78,0)}100%{box-shadow:0 0 0 0 rgba(255,90,78,0)}}
-@media (prefers-reduced-motion:reduce){.live{animation:none}}
-.sp{flex:1}.who{text-align:right;font-size:13px;color:#c9cad6}.who b{display:block;color:#fff;font-weight:600;font-size:14px}
-.pill{border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600}
-.pill.si{background:var(--lime);color:var(--night)}.pill.no{background:var(--red);color:#fff}
-.lnk{color:#c9cad6;font-size:14px;text-decoration:none}.lnk:hover{color:#fff}
-button{font:inherit;border:0;border-radius:999px;padding:12px 22px;font-weight:600;cursor:pointer}
-button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--lime2);outline-offset:2px}
-.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25);padding:7px 14px;font-size:13px}
-/* layout */
-main{max-width:1240px;margin:0 auto;padding:22px 28px 40px}
-.flow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;font-size:13px;color:var(--mist)}
-.flow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px}
-.flow span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px}
-.kpi .l{font-size:13px;color:var(--mist)}.kpi .n{font-size:36px;font-weight:600;letter-spacing:-.03em;line-height:1.15;font-variant-numeric:tabular-nums}
-.kpi .s{font-size:12px;color:var(--mist)}.kpi.hl{background:var(--lime);border-color:var(--lime)}
-.kpi.hl .l,.kpi.hl .s{color:#3d4a2c}
-.grid{display:grid;grid-template-columns:1.8fr 1fr;gap:18px}
-@media(max-width:900px){.grid,.kpis{grid-template-columns:1fr}.who{text-align:left}}
-.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin-bottom:16px}
-.case.vivo{box-shadow:inset 6px 0 0 var(--red)}.case.prev{box-shadow:inset 6px 0 0 #f2b54a}
-.ch{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
-.ch h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.02em}.ch small{color:var(--mist)}
-.tag{font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;background:var(--red);color:#fff}
-.tag.p{background:#f2b54a;color:var(--night)}
-.q{display:grid;grid-template-columns:118px 1fr;gap:4px 14px;margin:12px 0}
-.q dt{font-size:13px;color:var(--mist)}.q dd{margin:0}
-.code{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
-.prot{display:flex;gap:10px;background:var(--lime);border-radius:14px;padding:12px 14px;margin:10px 0}
-.prot.warn{background:#fff3df}
-.prot svg{flex:none;width:22px;height:22px;margin-top:1px}
-.it{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
-.it input{width:19px;height:19px;accent-color:var(--ink)}
-.it .h{font-weight:600}.it .m{font-size:12px;color:var(--mist)}
-.chip{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--mist);margin-left:4px;white-space:nowrap}
-.act{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.ap{background:var(--ink);color:#fff;flex:1;font-size:16px;padding:15px 22px}.ap:hover{background:#26264a}
-.re{background:#fff;color:var(--ink);border:1px solid var(--line)}
-.seal{font-size:12px;color:var(--mist);margin-top:12px}.seal b{color:var(--ok)}
-.empty{text-align:center;color:var(--mist);padding:36px}
-.rat{background:var(--night);color:#fff;border:0}.rat .ap{background:var(--lime);color:var(--night)}
-h3{margin:0 0 10px;font-size:16px;font-weight:600;letter-spacing:-.01em}
-.prov{padding:10px 0;border-top:1px solid var(--line)}.prov:first-of-type{border-top:0}
-.prov .r{display:flex;justify-content:space-between;gap:8px}.prov .m{font-size:12px;color:var(--mist)}
-.st{font-size:12px;font-weight:600}.st.g{color:var(--ok)}.st.y{color:var(--warn)}.st.n{color:var(--mist);font-weight:500}.st.x{color:var(--red)}
-.bar{height:6px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
-.real p{margin:0 0 8px;font-size:13px;color:#3a3b52}
-.rec{font-size:13px;padding:8px 0;border-top:1px solid var(--line)}.rec:first-of-type{border-top:0}
-.d{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}.dg{background:var(--ok)}.dy{background:#e3a72f}.dr{background:var(--red)}
-.kbd{font-size:12px;color:var(--mist)}
+.top{background:var(--night);color:#fff;height:64px;display:flex;align-items:center;gap:26px;padding:0 36px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-.02em}
+.brand i{width:24px;height:24px;border-radius:7px;background:var(--lime)}
+.clock{display:flex;align-items:center;gap:9px;color:#c9cad6;font-size:14px;min-width:0}
+.clock b{color:#fff;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.clock span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;flex:none}
+.sp{flex:1}.who{font-size:14px;color:#c9cad6;display:flex;align-items:center;gap:9px;white-space:nowrap}
+.who b{color:#fff;font-weight:500}.on{width:8px;height:8px;border-radius:50%;background:#a3e35b}.on.off{background:var(--red)}
+.who button{color:#c9cad6;font-size:14px;margin-left:8px}.who button:hover{color:#fff}
+/* scoreboard: the hero of the screen */
+.board{background:var(--lime);padding:34px 36px 26px}.in{max-width:1180px;margin:0 auto}
+.nums{display:flex;gap:56px;flex-wrap:wrap}
+.nums .n{font-size:64px;font-weight:600;letter-spacing:-.045em;line-height:1;font-variant-numeric:tabular-nums}
+.nums .l{font-size:14px;color:#3d4a2c;margin-top:8px}
+.tl{position:relative;height:38px;margin-top:30px}
+.tl .bar{position:absolute;left:0;right:0;top:15px;height:4px;border-radius:2px;background:rgba(25,25,50,.14)}
+.tl .done{position:absolute;left:0;top:15px;height:4px;border-radius:2px;background:var(--ink);transition:width .6s}
+.tl .m{position:absolute;top:9px;width:16px;height:16px;margin-left:-8px;border-radius:50%;border:3px solid var(--lime)}
+.tl .m.d{background:var(--red)}.tl .m.b{background:var(--ok)}
+.tl .t{position:absolute;top:30px;font-size:12px;color:#3d4a2c;transform:translateX(-50%)}
+.legend{display:flex;gap:18px;font-size:12px;color:#3d4a2c;margin-top:16px}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+/* content */
+main{max-width:1180px;margin:0 auto;padding:34px 36px 60px;display:grid;grid-template-columns:1.6fr 1fr;gap:32px}
+h2{font-size:14px;font-weight:500;color:var(--mist);margin:0 0 12px}
+.card{background:#fff;border-radius:26px;padding:32px 34px;margin-bottom:16px}
+.kind{font-size:14px;color:var(--mist);display:flex;align-items:center;gap:8px;margin-bottom:8px}.kind .dot.p{background:var(--amber)}
+.card h3{font-size:30px;font-weight:600;letter-spacing:-.03em;line-height:1.15;margin:0 0 8px}
+.why{color:#46475e;margin:0 0 18px}
+.safe{background:var(--lime);border-radius:16px;padding:14px 18px;margin:0 0 20px}.safe.plain{background:var(--paper)}
+.srv{border-top:1px solid var(--line);margin-bottom:22px}
+.srv label{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.srv input{width:18px;height:18px;accent-color:var(--ink);flex:none}.srv .m{margin-left:auto;color:var(--mist);font-size:14px}
+.act{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.ap{background:var(--ink);color:#fff;border-radius:999px;padding:16px 30px;font-weight:600}.ap:hover{background:#2a2a4d}
+.re{color:var(--mist);font-size:15px}.re:hover{color:var(--ink)}.exp{margin-left:auto;font-size:14px;color:var(--mist)}
+.empty{color:var(--mist);text-align:center;padding:44px 20px}
+.rat{background:var(--night);color:#fff}.rat .why{color:#c9cad6}.rat .ap{background:var(--lime);color:var(--night)}.rat .kind{color:#c9cad6}
+.side .row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.side .row span{font-size:14px;color:var(--mist);white-space:nowrap}.side .row span.g{color:var(--ok)}.side .row span.y{color:#b07400}.side .row span.r{color:var(--red)}
+.side h2+.row{border-top:1px solid var(--line)}.side section+section{margin-top:30px}
+.side p{font-size:13px;color:var(--mist);margin:10px 0 0}
 /* login */
-#login{min-height:calc(100vh - 62px);display:grid;place-items:center;background:var(--night)}
-.lg{width:min(420px,92vw);background:var(--lime);color:var(--night);border-radius:22px;padding:28px}
-.lg h1{margin:0 0 6px;font-size:28px;font-weight:600;letter-spacing:-.02em}.lg p{margin:0 0 16px;color:#3d4a2c}
-.lg input{width:100%;font:inherit;padding:13px 16px;border-radius:12px;border:0;margin:6px 0;background:#fff}
-.lg button{width:100%;margin-top:10px;background:var(--night);color:#fff;padding:14px}
-#err{color:#8a1c14;font-size:14px;min-height:20px}
+#login{min-height:calc(100vh - 64px);display:grid;place-items:center;background:var(--night)}
+.lg{width:min(400px,90vw);background:var(--lime);border-radius:26px;padding:34px}
+.lg h1{margin:0 0 4px;font-size:26px;font-weight:600;letter-spacing:-.02em}.lg p{margin:0 0 18px;color:#3d4a2c;font-size:15px}
+.lg input{width:100%;font:inherit;padding:14px 16px;border-radius:14px;border:0;margin:5px 0;background:#fff}
+.lg button{width:100%;margin-top:12px;background:var(--night);color:#fff;border-radius:999px;padding:15px;font-weight:600}
+#err{color:#8a1c14;font-size:14px;min-height:20px;margin-top:8px}
+@media(max-width:860px){.top{gap:14px;padding:0 18px}.clock span{display:none}.board{padding:24px 18px}.nums{gap:26px}.nums .n{font-size:44px}main{grid-template-columns:1fr;padding:24px 18px}.card{padding:24px}}
+@media(prefers-reduced-motion:reduce){.tl .done{transition:none}}
 </style>
 <header class=top>
- <div class=brand><span class=mark><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>Bloqueo Federal</div>
- <div class=clock><span class=live></span><b id=min>0'</b><span id=partido></span></div>
- <div class=sp></div>
- <a class=lnk href="/transparencia" target=_blank>Registro público</a>
- <div class=who id=quien></div><span id=puede class=pill></span>
- <button class=ghost id=salir style="display:none">Salir</button>
+ <div class=brand><i></i>Bloqueo Federal</div>
+ <div class=clock><span class=dot></span><b id=min>0'</b><span id=partido></span></div>
+ <div class=sp></div><div class=who id=who></div>
 </header>
 <section id=login style="display:none"><div class=lg>
- <h1>Ingreso del juez</h1><p>Solo el juez de turno puede firmar órdenes.</p>
+ <h1>Ingreso del juez</h1><p>Solo el juez de turno puede firmar.</p>
  <input id=u placeholder="Usuario" autocomplete=username aria-label=Usuario>
  <input id=c type=password placeholder="Contraseña" autocomplete=current-password aria-label=Contraseña>
  <button id=entrar>Entrar</button><div id=err role=alert></div>
 </div></section>
-<main id=app style="display:none">
- <div class=flow id=flow><span>Detección</span><span>Expediente sellado</span><span class=on>Firma del juez</span><span>Todos los proveedores</span><span>Vence al final</span></div>
- <div class=kpis>
-  <div class=kpi><div class=l>Streams piratas bloqueados</div><div class=n id=k1>0</div><div class=s>en todos los proveedores</div></div>
-  <div class=kpi><div class=l>Tiempo medio hasta el bloqueo</div><div class=n id=k2>–</div><div class=s>desde la detección</div></div>
-  <div class="kpi hl"><div class=l>Sitios legítimos protegidos</div><div class=n id=k3>0</div><div class=s id=k3s>siguen en línea porque se bloqueó solo el dominio</div></div>
-  <div class=kpi><div class=l>Evidencia</div><div class=n id=k4>–</div><div class=s id=k4s></div></div>
- </div>
- <div class=grid>
-  <section><div id=rat></div><div id=cola></div></section>
-  <aside>
-   <div class=card><h3>Proveedores de internet</h3><div id=prov></div></div>
-   <div class=card><h3>Órdenes recientes</h3><div id=rec></div></div>
-   <div class="card real"><h3>¿Cómo sé que es real?</h3>
-    <p>Cada paso queda en un registro encadenado con hashes. Si alguien cambia una coma, la verificación falla.</p>
-    <p>Verificalo vos: <span class=code>python3 plataforma/verificar_evidencia.py salida</span></p>
-    <p id=auddet></p><p class=kbd>Atajo: tecla A aprueba el primer lote.</p></div>
+<div id=app style="display:none">
+ <section class=board><div class=in>
+  <div class=nums>
+   <div><div class=n id=k1>0</div><div class=l>streams piratas bloqueados</div></div>
+   <div><div class=n id=k2>–</div><div class=l>desde la detección hasta el bloqueo</div></div>
+   <div><div class=n id=k3>0</div><div class=l>sitios inocentes protegidos</div></div>
+   <div><div class=n id=k4>0</div><div class=l>reclamos de sitios afectados</div></div>
+  </div>
+  <div class=tl id=tl></div>
+  <div class=legend><span><i style="background:var(--red)"></i>stream pirata detectado</span><span><i style="background:var(--ok)"></i>bloqueo aplicado</span></div>
+ </div></section>
+ <main>
+  <div><div id=rat></div><h2 id=pendh>Para firmar</h2><div id=cola></div></div>
+  <aside class=side>
+   <section><h2>Proveedores de internet</h2><div id=prov></div></section>
+   <section><h2>Evidencia</h2><div class=row id=aud></div><p>Cualquiera puede verificarla con <code>verificar_evidencia.py</code>. <a href="/transparencia" target=_blank>Registro público</a></p></section>
   </aside>
- </div>
-</main>
+ </main>
+</div>
 <script>
 const $=id=>document.getElementById(id);let est=null,vistos=new Set(),primero=true,desmarcados=new Set();
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>String(x).replace('.',',');
-const SH='<svg viewBox="0 0 24 24" fill="none" stroke="#2f5a12" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>';
 async function api(r,b){const o=b?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}:{};const x=await fetch(r,o);return [x.status,await x.json()]}
-function bip(){try{const a=new AudioContext(),o=a.createOscillator();o.frequency.value=880;o.connect(a.destination);o.start();o.stop(a.currentTime+.15)}catch(e){}}
-$('entrar').onclick=async()=>{const[s,r]=await api('/api/login',{usuario:$('u').value,clave:$('c').value});
+function bip(){try{const a=new AudioContext(),o=a.createOscillator();o.frequency.value=880;o.connect(a.destination);o.start();o.stop(a.currentTime+.12)}catch(e){}}
+$('entrar').onclick=async()=>{const[s]=await api('/api/login',{usuario:$('u').value,clave:$('c').value});
  if(s!==200){$('err').textContent='Usuario o contraseña incorrectos.';return}$('c').value='';$('err').textContent='';if('Notification'in window)Notification.requestPermission();tick()};
 $('c').onkeydown=e=>{if(e.key==='Enter')$('entrar').click()};
-$('salir').onclick=async()=>{await api('/api/logout',{});tick()};
+async function salir(){await api('/api/logout',{});tick()}
 async function decidir(apr,rec){await api('/api/decidir',{aprobar:apr,rechazar:rec});tick()}
 function aprobarLote(i){const ids=[...document.querySelectorAll(`input[data-g="${i}"]`)];
  decidir(ids.filter(x=>x.checked).map(x=>x.value),ids.filter(x=>!x.checked).map(x=>x.value))}
 function rechazarLote(i){decidir([],est.cola[i].items.map(x=>x.id))}
 document.onkeydown=e=>{if(e.key.toLowerCase()==='a'&&est&&est.puede_firmar&&est.cola.length&&document.activeElement.tagName!=='INPUT')aprobarLote(0)};
-function nombreSitio(d){return d.replace(/\.(test|example)$/,'').replace(/-/g,' ')}
-function item(x,i){const prev=x.tipo==='preventivo';
- const bl=x.bloqueos.map(b=>`<span class=chip>${b.tipo==='ip'?'IP':'Dominio'} ${esc(b.objetivo)}</span>`).join(' ');
- return `<div class=it><input type=checkbox aria-label="Incluir ${esc(x.host)}" ${desmarcados.has(x.id)?'':'checked'} data-g="${i}" value="${esc(x.id)}" onchange="this.checked?desmarcados.delete(this.value):desmarcados.add(this.value)">
- <div><div class=h>${esc(x.host)} <a class=m href="/expediente/${esc(x.id)}" target=_blank>${esc(x.id)}</a></div>
- <div class=m>${prev?'Preventivo: mismo sitio, encontrado en DNS pasivo antes de que transmita':'Stream en vivo, con captura y marca de agua'}</div><div style="margin-top:4px">${bl}</div></div><div></div></div>`}
-function grupo(g,i,s){const x=g.items.find(y=>y.tipo!=='preventivo')||g.items[0];const prev=g.preventivo;
- const prot=x.ip_compartida&&x.n_ajenos?`<div class=prot>${SH}<div><b>IP compartida con ${x.n_ajenos} sitio${x.n_ajenos>1?'s':''} legítimo${x.n_ajenos>1?'s':''}</b>: ${x.ajenos.slice(0,5).map(nombreSitio).map(esc).join(', ')}${x.n_ajenos>5?' y otros':''}. Por eso se bloquea solo el dominio y siguen en línea.</div></div>`
-  :x.ip_compartida?`<div class="prot warn">${SH}<div>Sin datos del servidor: por precaución se bloquea solo el dominio.</div></div>`
-  :`<div class=prot>${SH}<div><b>Servidor dedicado al pirata</b>: no aloja otros sitios, así que se bloquea la IP y también el dominio como respaldo.</div></div>`;
- const n=g.items.length;
- return `<section class="card case ${prev?'prev':'vivo'}"><div class=ch><span class="tag ${prev?'p':''}">${prev?'Preventivo':'En vivo'}</span><h2>${esc(x.host)}</h2><small>detectado en el minuto ${num(Math.round(x.creado_min))}, espera ${num(x.espera_min)} min</small></div>
- <dl class=q><dt>Qué se pide</dt><dd>Bloquear ${n>1?`${n} servidores de <b>${esc(g.sitio)}</b>`:`<b>${esc(x.host)}</b>`} en todos los proveedores hasta el minuto ${x.vence_min}.</dd>
- <dt>Por qué</dt><dd>${prev?esc(x.clasificacion):`La marca de agua <span class=code>${esc(x.marca||'')}</span> es la señal oficial del partido y este sitio no es un licenciatario.`}</dd>
- <dt>Servidor</dt><dd>${esc(x.ip)} en ${esc(x.org||'hosting desconocido')}</dd></dl>${prot}
- ${g.items.map(y=>item(y,i)).join('')}
- <div class=act>${s.puede_firmar?`<button class=ap onclick="aprobarLote(${i})">Aprobar y firmar seleccionados</button><button class=re onclick="rechazarLote(${i})">Rechazar todo</button>`:'<span class=m>Solo el juez de turno puede firmar.</span>'}</div>
- <div class=seal><b>Sello íntegro</b> SHA-256 ${esc(x.sello.slice(0,12))}…</div></section>`}
+const sitio=d=>d.replace(/\.(test|example)$/,'').replace(/-/g,' ');
+function caso(g,i,s){const x=g.items.find(y=>y.tipo!=='preventivo')||g.items[0];const prev=g.preventivo;const prot=x.ip_compartida&&x.n_ajenos;
+ const safe=prot?`Comparte servidor con ${x.n_ajenos} sitio${x.n_ajenos>1?'s':''} inocente${x.n_ajenos>1?'s':''}, como ${esc(sitio(x.ajenos[0]))}. Bloqueamos solo el dominio, así siguen en línea.`
+  :x.ip_compartida?'No sabemos quién más usa ese servidor, así que bloqueamos solo el dominio.':'El servidor es solo del pirata: bloqueamos su IP y su dominio.';
+ const why=prev?'Es un servidor de respaldo del mismo sitio. Lo bloqueamos antes de que empiece a transmitir.':'Transmite la señal oficial del partido sin licencia. Lo prueba su marca de agua.';
+ return `<section class=card><div class=kind><span class="dot ${prev?'p':''}"></span>${prev?'Preventivo':'En vivo desde el minuto '+Math.round(x.creado_min)}</div>
+ <h3>Bloquear ${esc(g.sitio)}</h3><p class=why>${why}</p><div class="safe${prot?'':' plain'}">${safe}</div>
+ <div class=srv>${g.items.map(y=>`<label><input type=checkbox ${desmarcados.has(y.id)?'':'checked'} data-g="${i}" value="${esc(y.id)}" onchange="this.checked?desmarcados.delete(this.value):desmarcados.add(this.value)">${esc(y.host)}<span class=m>${y.tipo==='preventivo'?'preventivo':'en vivo'}</span></label>`).join('')}</div>
+ <div class=act>${s.puede_firmar?`<button class=ap onclick="aprobarLote(${i})">Aprobar y firmar seleccionados</button><button class=re onclick="rechazarLote(${i})">Rechazar</button>`:'<span class=re>Solo el juez de turno puede firmar.</span>'}
+ <a class=exp href="/expediente/${esc(x.id)}" target=_blank>Ver expediente sellado</a></div></section>`}
+function linea(s,m){const fin=s.fin_min||105,pct=v=>Math.max(0,Math.min(100,v/fin*100));
+ const marks=m.linea.map(e=>`<span class="m ${e.tipo==='bloqueo'?'b':'d'}" style="left:${pct(e.min)}%" title="${esc(e.sitio)}, minuto ${num(e.min)}"></span>`).join('');
+ return `<div class=bar></div><div class=done style="width:${pct(s.minuto)}%"></div>${marks}<span class=t style="left:0;transform:none">0'</span><span class=t style="left:${pct(45)}%">45'</span><span class=t style="left:${pct(s.minuto)}%">${Math.floor(s.minuto)}'</span><span class=t style="left:auto;right:0;transform:none">${fin}'</span>`}
 function render(){const s=est,m=s.metricas;
  $('min').textContent=Math.floor(s.minuto)+"'";$('partido').textContent=(s.partido||'').replace(/^Partido de práctica — /,'');
- $('quien').innerHTML=s.juez?`<b>${esc(s.juez_nombre)}</b>De turno: ${esc(s.de_turno_nombres.join(', ')||'nadie')}`:'';
- $('puede').textContent=s.juez?(s.puede_firmar?'Puede firmar':'Fuera de turno'):'';$('puede').className='pill '+(s.juez?(s.puede_firmar?'si':'no'):'');
- $('k1').textContent=`${m.bloqueados} / ${m.vivos}`;$('k2').textContent=m.tiempo_medio==null?'–':num(m.tiempo_medio)+' min';
- $('k3').textContent=m.protegidos.length;$('k3s').textContent=m.protegidos.length?m.protegidos.slice(0,4).map(nombreSitio).join(', ')+(m.protegidos.length>4?' y más':''):'siguen en línea porque se bloqueó solo el dominio';
- $('k4').textContent=m.auditoria_ok?'Íntegra':'Alterada';$('k4').style.color=m.auditoria_ok?'var(--ok)':'var(--red)';$('k4s').textContent=`${m.auditoria_n} pasos encadenados con SHA-256`;
- $('auddet').innerHTML=`Ahora: <b style="color:${m.auditoria_ok?'var(--ok)':'var(--red)'}">${esc(m.auditoria_detalle)}</b>`;
- const fl=[...$('flow').children];fl.forEach(e=>e.className='');fl[s.cola.length?2:(s.recientes.length?3:0)].className='on';
- $('rat').innerHTML=s.ratificar.length?`<section class="card rat"><h3>Cambio de turno</h3><p>Hay ${s.ratificar.length} órdenes marco del turno anterior. Ratificalas para que sigan cubriendo los nuevos servidores de esos sitios.</p><div class=act><button class=ap onclick="api('/api/ratificar',{}).then(tick)">Ratificar todas</button></div></section>`:'';
- $('cola').innerHTML=s.cola.length?s.cola.map((g,i)=>grupo(g,i,s)).join(''):'<div class="card empty">No hay pedidos pendientes. Cuando aparezca un stream pirata, el expediente llega acá.</div>';
+ $('who').innerHTML=`<span class="on ${s.puede_firmar?'':'off'}"></span><b>${esc(s.juez_nombre)}</b>${s.puede_firmar?'de turno':'fuera de turno'}<button onclick="salir()" id=salir>Salir</button>`;
+ $('k1').textContent=m.vivos?`${m.bloqueados} de ${m.vivos}`:'0';$('k2').textContent=m.tiempo_medio==null?'–':num(m.tiempo_medio)+' min';
+ $('k3').textContent=m.protegidos.length;$('k4').textContent=m.reclamos;$('tl').innerHTML=linea(s,m);
+ $('aud').innerHTML=m.auditoria_ok?`${m.auditoria_n} pasos encadenados<span class=g>Íntegra</span>`:`La verificación falló<span class=r>Alterada</span>`;
+ $('rat').innerHTML=s.ratificar.length?`<section class="card rat"><div class=kind>Cambio de turno</div><h3>Ratificar ${s.ratificar.length} órdenes del turno anterior</h3><p class=why>Así siguen cubriendo los nuevos servidores de esos sitios.</p><div class=act><button class=ap onclick="api('/api/ratificar',{}).then(tick)">Ratificar todas</button></div></section>`:'';
+ $('pendh').textContent=s.cola.length?`Para firmar (${s.cola.length})`:'Para firmar';
+ $('cola').innerHTML=s.cola.length?s.cola.map((g,i)=>caso(g,i,s)).join(''):'<div class="card empty">Nada para firmar. Te avisamos cuando aparezca un stream pirata.</div>';
  const ult=s.recientes[0];
- $('prov').innerHTML=s.proveedores.map(p=>{const e=ult?ult.proveedores[p.id]:null;const cls=!e?"n":e==="aplicada"?"g":(e==="fallida"||e==="rechazada")?"x":"y";
-  const txt=!e?'Sin órdenes todavía':e==='aplicada'?'Bloqueo aplicado':e==='recibida'?'Aplicando…':e==='fallida'?'Falló, reintentando':e;
-  return `<div class=prov><div class=r><b>${esc(p.nombre.replace(' (ficticio)',''))}</b><span class="st ${cls}">${txt}</span></div><div class=m>Acepta ${p.capacidades.map(c=>c==="ip"?"IP":c).join(" y ")}</div><div class=bar><i style="width:${e==='aplicada'?100:e==='recibida'?55:e?20:0}%;background:${e==='aplicada'?'var(--ok)':cls==='x'?'var(--red)':'#e3a72f'}"></i></div></div>`}).join('');
- $('rec').innerHTML=s.recientes.slice(0,6).map(x=>`<div class=rec><a href="/expediente/${esc(x.id)}" target=_blank>${esc(x.host)}</a> <span class=m style="color:var(--mist)">${x.estado==='aprobado'?'aprobado':x.estado}</span><div>${Object.entries(x.proveedores).map(([p,e])=>`<span class="d ${e==='aplicada'?'dg':e==='fallida'||e==='rechazada'?'dr':'dy'}"></span>`).join('')}</div></div>`).join('')||'<span class=m style="color:var(--mist)">Todavía no hay órdenes.</span>'}
+ $('prov').innerHTML=s.proveedores.map(p=>{const e=ult?ult.proveedores[p.id]:null;
+  const [c,t]=!e?['','Sin órdenes']:e==='aplicada'?['g','Bloqueado']:e==='recibida'?['y','Aplicando']:e==='fallida'?['r','Reintentando']:['',e];
+  return `<div class=row>${esc(p.nombre.replace(' (ficticio)',''))}<span class=${c}>${t}</span></div>`}).join('')}
 async function tick(){const[st,s]=await api('/api/estado');est=s;
- $('login').style.display=s.juez?'none':'grid';$('app').style.display=s.juez?'block':'none';$('salir').style.display=s.juez?'inline-block':'none';
- if(!s.juez){$('min').textContent=Math.floor(s.minuto)+"'";$('partido').textContent=(s.partido||'').replace(/^Partido de práctica — /,'');$('quien').innerHTML='';$('puede').textContent='';$('puede').className='';return}
+ $('login').style.display=s.juez?'none':'grid';$('app').style.display=s.juez?'block':'none';
+ if(!s.juez){$('min').textContent=Math.floor(s.minuto)+"'";$('partido').textContent=(s.partido||'').replace(/^Partido de práctica — /,'');$('who').innerHTML='';return}
  const nuevos=s.cola.flatMap(g=>g.items).filter(x=>!vistos.has(x.id));nuevos.forEach(x=>vistos.add(x.id));
  if(nuevos.length&&!primero&&s.puede_firmar){bip();if(window.Notification&&Notification.permission==='granted')new Notification('Nuevo pedido de bloqueo',{body:nuevos.map(x=>x.host).join(', ')})}
- document.title=s.cola.length?`(${s.cola.length}) Juez de turno`:'Bloqueo Federal · Juez de turno';primero=false;render()}
+ document.title=s.cola.length?`(${s.cola.length}) Bloqueo Federal`:'Bloqueo Federal';primero=false;render()}
 setInterval(tick,1000);tick();
 </script></html>

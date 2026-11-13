@@ -500,6 +500,7 @@ class Plataforma:
 
     # ---- reclamos
     def procesar_reclamo(self, rc: dict) -> None:
+        self.n_reclamos = getattr(self, "n_reclamos", 0) + 1
         self.audit.registrar("reclamo_recibido", self.minuto, reclamo=rc)
         o = next((x for (pid, oid), x in self.ordenes.items()
                   if pid == rc["proveedor"] and x["estado"] in ("recibida", "aplicada")

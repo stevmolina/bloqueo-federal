@@ -59,7 +59,7 @@ def estado_ordenes(p, x: dict) -> Dict[str, str]:
 def web_kpis(p, web) -> dict:
     """Headline numbers for the judge screen, computed from the platform's own state."""
     vivos = [x for x in p.expedientes.values() if x.get("tipo") != "preventivo"]
-    bloqueados, tiempos = 0, []
+    bloqueados, tiempos, linea = 0, [], []
     for x in vivos:
         aplicadas = [o.get("aplicada_min") for o in p.ordenes.values()
                      if o["expediente_id"] == x["id"] and o.get("aplicada_min") is not None]
@@ -67,13 +67,18 @@ def web_kpis(p, web) -> dict:
             bloqueados += 1
             primero = x["evidencia"][0].get("minuto", x["creado_min"]) if x["evidencia"] else x["creado_min"]
             tiempos.append(max(0.0, min(aplicadas) - (primero if isinstance(primero, (int, float)) else x["creado_min"])))
+            linea.append({"min": round(min(aplicadas), 1), "tipo": "bloqueo", "sitio": x["sitio"]})
+        det = x["evidencia"][0].get("minuto") if x["evidencia"] else None
+        if isinstance(det, (int, float)):
+            linea.append({"min": det, "tipo": "deteccion", "sitio": x["sitio"]})
     import time as _t
     if _t.time() - getattr(web, "_aud_t", 0) > 3:
         from motor import verificar_auditoria
         web._aud = verificar_auditoria(p.audit.ruta)
         web._aud_t = _t.time()
     ok, detalle = getattr(web, "_aud", (True, ""))
-    return {"vivos": len(vivos), "bloqueados": bloqueados,
+    reclamos = getattr(p, "n_reclamos", 0)
+    return {"reclamos": reclamos, "vivos": len(vivos), "bloqueados": bloqueados, "linea": sorted(linea, key=lambda e: e["min"]),
             "tiempo_medio": round(sum(tiempos) / len(tiempos), 1) if tiempos else None,
             "auditoria_ok": ok, "auditoria_n": p.audit.n, "auditoria_detalle": detalle}
 
@@ -166,7 +171,7 @@ class Web:
             def do_GET(self) -> None:
                 ruta = urlparse(self.path).path
                 if ruta == "/":
-                    return self._enviar(200, PANEL_HTML, "text/html")
+                    return self._enviar(200, (Path(__file__).resolve().parent / "panel.html").read_text(encoding="utf-8"), "text/html")
                 if ruta == "/api/estado":
                     return self._enviar(200, web.estado(self._juez()))
                 if ruta == "/transparencia":
@@ -229,18 +234,29 @@ class Web:
                              f"<td>{e(prov.get(i['proveedor'], '—'))}</td></tr>" for i in x["plan"])
         d = x.get("decision") or {}
         r = x["riesgo_colateral"]
-        cuerpo = f"""<h1>Expediente {e(x['id'])}</h1>
-<p class=sello>{'Sello íntegro: el expediente no fue modificado' if integro else 'El sello no coincide: el expediente fue alterado'} · <code>{e(x['sello'])}</code></p>
-<h2>Qué se pide</h2><p>Bloquear <b>{e(x['host_stream'])}</b> (servidor {e(x['ip_servidor'])}, {e(str(r.get('organizacion')))} AS{e(str(r.get('asn')))})
-hasta el minuto {x['vence_min']} del partido.</p>
-<h2>Por qué</h2><p>{e(x['clasificacion'])}.</p>
-<p><b>Riesgo colateral:</b> {e(r['motivo'])}. {'Se bloquea solo por dominio para no afectar sitios legítimos.' if r['ip_compartida'] else 'IP dedicada: se bloquea por IP y por dominio.'}</p>
-{f"<p><b>Origen:</b> infraestructura vinculada al expediente {e(x['origen'])} (bloqueo preventivo).</p>" if x.get('origen') else ''}
-{f"<p><b>Orden marco:</b> ampliación de {e(x['orden_marco'])}.</p>" if x.get('orden_marco') else ''}
-<h2>Evidencia</h2><table><tr><th>Fuente</th><th>Minuto</th><th>Marca de agua</th><th>SHA-256</th></tr>{filas_ev}</table>
-<h2>Órdenes por proveedor</h2><table><tr><th>Proveedor</th><th>Tipo</th><th>Objetivo</th><th>Estado</th></tr>{filas_plan}</table>
-<h2>Decisión</h2><p>{e(x['estado'])} · {e(str(d.get('juez_id', '—')))} ({e(str(d.get('juzgado_id', '')))}) en el minuto {e(str(d.get('minuto', '—')))}<br>
-Firma: <code>{e(str(d.get('firma_decision', '—')))}</code></p>"""
+        ajenos = r.get("dominios_ajenos", [])
+        if r["ip_compartida"] and ajenos:
+            protege = (f"El servidor también aloja {len(ajenos)} sitio{'s' if len(ajenos) > 1 else ''} inocente"
+                       f"{'s' if len(ajenos) > 1 else ''}: {e(', '.join(ajenos[:6]))}{' y otros' if len(ajenos) > 6 else ''}. "
+                       "Por eso se bloquea solo el dominio y siguen en línea.")
+        elif r["ip_compartida"]:
+            protege = "No hay datos de quién más usa el servidor, así que se bloquea solo el dominio."
+        else:
+            protege = "El servidor es solo del pirata: se bloquea su IP y su dominio."
+        estado = {"aprobado": "Aprobado y firmado", "rechazado": "Rechazado", "pendiente_juez": "Esperando al juez"}.get(x["estado"], x["estado"])
+        firma = (f"{estado} por {e(str(d.get('juez_id')))} en el minuto {e(str(d.get('minuto')))}." if d else estado + ".")
+        cuerpo = f"""<p class=k>Expediente {e(x['id'])}</p>
+<h1>Bloquear {e(x['host_stream'])}</h1>
+<p class="sello{'' if integro else ' mal'}">{'Sello íntegro. Nadie modificó este expediente desde que se creó.' if integro else 'El sello no coincide: este expediente fue modificado.'}</p>
+<h2>Qué se pide</h2><p>Bloquear {e(x['host_stream'])} en todos los proveedores hasta el minuto {x['vence_min']} del partido.</p>
+<h2>Por qué</h2><p>{'Es un servidor de respaldo del mismo sitio, encontrado antes de que transmita.' if x.get('origen') else 'Transmite la señal oficial del partido sin licencia. Lo prueba su marca de agua.'}</p>
+<h2>A quién protege</h2><p>{protege}</p>
+<h2>Decisión</h2><p>{firma}</p>
+<details><summary>Evidencia técnica</summary>
+<p>Servidor {e(x['ip_servidor'])}, {e(str(r.get('organizacion')))} (AS{e(str(r.get('asn')))}).</p>
+<table><tr><th>Fuente</th><th>Minuto</th><th>Marca de agua</th><th>SHA-256</th></tr>{filas_ev}</table>
+<table><tr><th>Proveedor</th><th>Tipo</th><th>Objetivo</th><th>Estado</th></tr>{filas_plan}</table>
+<p>Sello <code>{e(x['sello'])}</code><br>Firma del juez <code>{e(str(d.get('firma_decision', '—')))}</code></p></details>"""
         return 200, PAGINA.format(titulo=e(x["id"]), cuerpo=cuerpo)
 
     def transparencia(self) -> str:
@@ -268,12 +284,12 @@ PAGINA = """<!doctype html><html lang=es><meta charset=utf-8><meta name=viewport
 <style>body{{margin:0;font:15px/1.55 Sora,system-ui,sans-serif;color:#191932;background:#f7f7f3}}
 .top{{background:#0d0d1a;color:#fff;padding:16px 28px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-.02em}}
 .top i{{width:28px;height:28px;border-radius:8px;background:#d4f7a6;display:inline-block}}
-.w{{max-width:920px;margin:0 auto;padding:26px 28px 48px}}
+.w{{max-width:760px;margin:0 auto;padding:48px 32px 64px}}
 table{{border-collapse:collapse;width:100%;margin:10px 0;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e6e6df}}
 td,th{{border-bottom:1px solid #e6e6df;padding:9px 12px;text-align:left;font-size:13px}}th{{color:#6b6d85;font-weight:500}}
 code{{font-size:11px;word-break:break-all;font-family:ui-monospace,Menlo,monospace}}
-h1{{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:0 0 12px}}h2{{font-size:17px;font-weight:600;margin:26px 0 6px}}
-.sello{{background:#d4f7a6;padding:12px 16px;border-radius:14px}}a{{color:#191932}}
+h1{{font-size:38px;font-weight:600;letter-spacing:-.03em;line-height:1.15;margin:0 0 18px}}h2{{font-size:15px;font-weight:500;color:#7a7c92;margin:26px 0 4px}}h2+p{{margin-top:0;font-size:17px}}
+.sello{{background:#d4f7a6;padding:14px 18px;border-radius:16px}}.sello.mal{{background:#ffd9d5}}.k{{color:#7a7c92;margin:0 0 6px}}details{{margin-top:30px;color:#46475e}}summary{{cursor:pointer;font-weight:500}}a{{color:#191932}}
 </style><body><div class=top><i></i>Bloqueo Federal</div><div class=w>{cuerpo}</div></body></html>"""
 
 PANEL_HTML = (Path(__file__).resolve().parent / "panel.html").read_text(encoding="utf-8")
