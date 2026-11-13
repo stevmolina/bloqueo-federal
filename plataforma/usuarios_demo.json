@@ -1,0 +1,15 @@
+{
+  "aviso": "Usuarios de DEMOSTRACIÓN (permitidos por el reglamento del desafío). Contraseñas en el README.",
+  "usuarios": {
+    "laura": {
+      "juez_id": "jueza-laura-ficticia",
+      "sal": "14e22c0d9ef467e07c55b3d58f2acba2",
+      "hash": "6a48c4ac0329c867e70b9476c6d7e1e1fd811f95df053d08f9106d12b91729a2"
+    },
+    "martin": {
+      "juez_id": "juez-martin-ejemplo",
+      "sal": "b223b4986d9058489786c6bc2258f4bb",
+      "hash": "f5564ba7206f9d853005e89390a36ba8cd3db1a2319d9c7b61c7f186e52b765a"
+    }
+  }
+}

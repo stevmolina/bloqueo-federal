@@ -1,0 +1,11 @@
+__pycache__/
+salida*/
+pruebas/corridas/
+pruebas/final/
+pruebas/web*/
+pruebas/variantes/*/corridas*/
+pruebas/variantes/*/*.log
+pruebas/variantes/*/*.txt
+pruebas/estres/
+pruebas/motor_v1_backup.py
+.w
