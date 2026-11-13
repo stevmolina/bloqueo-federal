@@ -8,6 +8,7 @@ Plataforma judicial que lleva cada stream pirata de un partido a la firma del ju
 y de ahí a todos los proveedores de internet, durante el partido.
 
 [Sitio del proyecto](https://stevmolina.github.io/bloqueo-federal-sitio/) ·
+[Video de demostración · 2:15](https://stevmolina.github.io/bloqueo-federal-sitio/demo.html) ·
 [Resultados](#resultados) ·
 [Cómo funciona](#cómo-funciona) ·
 [Correrlo](#correrlo-en-5-minutos) ·
@@ -41,6 +42,10 @@ directo a todos los proveedores. Hoy pierden tres:
 | **La cooperativa del pueblo** | Los proveedores chicos reciben la orden tarde y no llegan a aplicarla. |
 
 ## Resultados
+
+Los resultados y el video corresponden a práctica y a un escenario de prueba propio.
+Los archivos actuales de `entrega/` son de práctica, como indica su `LEEME.md`;
+todavía no contamos con evidencia de una corrida final autorizada por la organización.
 
 Medidos con `evaluacion/verificar.py`, el verificador oficial del desafío, sin modificar.
 
