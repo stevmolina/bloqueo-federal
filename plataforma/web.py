@@ -34,7 +34,7 @@ def resumen_exp(p, x: dict) -> dict:
     return {
         "id": x["id"], "tipo": x.get("tipo"), "estado": x["estado"], "sitio": x["sitio"], "host": x["host_stream"],
         "ip": x["ip_servidor"], "org": r.get("organizacion"), "asn": r.get("asn"), "ip_compartida": r["ip_compartida"],
-        "riesgo": r["motivo"], "n_ajenos": len(r.get("dominios_ajenos", [])), "clasificacion": x["clasificacion"],
+        "riesgo": r["motivo"], "n_ajenos": len(r.get("dominios_ajenos", [])), "ajenos": r.get("dominios_ajenos", [])[:12], "clasificacion": x["clasificacion"],
         "marca": x.get("marca"), "n_evidencia": len(x["evidencia"]), "pagina": ev.get("pagina"),
         "sha256_captura": ev.get("sha256_captura"), "promocion": [q.get("url") for q in ev.get("promocion", [])],
         "bloqueos": [{"tipo": t, "objetivo": o, "proveedores": sorted(i["proveedor"] for i in x["plan"]
@@ -54,6 +54,28 @@ def estado_ordenes(p, x: dict) -> Dict[str, str]:
         if o["expediente_id"] == x["id"] and rango.get(o["estado"], 0) > rango.get(mejor.get(pid, ""), 0):
             mejor[pid] = o["estado"]
     return mejor
+
+
+def web_kpis(p, web) -> dict:
+    """Headline numbers for the judge screen, computed from the platform's own state."""
+    vivos = [x for x in p.expedientes.values() if x.get("tipo") != "preventivo"]
+    bloqueados, tiempos = 0, []
+    for x in vivos:
+        aplicadas = [o.get("aplicada_min") for o in p.ordenes.values()
+                     if o["expediente_id"] == x["id"] and o.get("aplicada_min") is not None]
+        if aplicadas:
+            bloqueados += 1
+            primero = x["evidencia"][0].get("minuto", x["creado_min"]) if x["evidencia"] else x["creado_min"]
+            tiempos.append(max(0.0, min(aplicadas) - (primero if isinstance(primero, (int, float)) else x["creado_min"])))
+    import time as _t
+    if _t.time() - getattr(web, "_aud_t", 0) > 3:
+        from motor import verificar_auditoria
+        web._aud = verificar_auditoria(p.audit.ruta)
+        web._aud_t = _t.time()
+    ok, detalle = getattr(web, "_aud", (True, ""))
+    return {"vivos": len(vivos), "bloqueados": bloqueados,
+            "tiempo_medio": round(sum(tiempos) / len(tiempos), 1) if tiempos else None,
+            "auditoria_ok": ok, "auditoria_n": p.audit.n, "auditoria_detalle": detalle}
 
 
 class Web:
@@ -98,6 +120,7 @@ class Web:
                 "metricas": {"expedientes": len(p.expedientes), "descartes": len(p.descartes),
                              "aprobados": sum(1 for x in p.expedientes.values() if x["estado"] == "aprobado"),
                              "ordenes_aplicadas": sum(1 for o in p.ordenes.values() if o["estado"] == "aplicada"),
+                             **web_kpis(p, self),
                              # Legitimate sites that shared a server with an approved pirate and stayed online
                              # because the platform blocked only the domain.
                              "protegidos": sorted({d for x in p.expedientes.values() if x["estado"] == "aprobado"
@@ -207,7 +230,7 @@ class Web:
         d = x.get("decision") or {}
         r = x["riesgo_colateral"]
         cuerpo = f"""<h1>Expediente {e(x['id'])}</h1>
-<p class=sello>{'✅ Sello íntegro' if integro else '❌ SELLO NO COINCIDE: el expediente fue alterado'} · <code>{e(x['sello'])}</code></p>
+<p class=sello>{'Sello íntegro: el expediente no fue modificado' if integro else 'El sello no coincide: el expediente fue alterado'} · <code>{e(x['sello'])}</code></p>
 <h2>Qué se pide</h2><p>Bloquear <b>{e(x['host_stream'])}</b> (servidor {e(x['ip_servidor'])}, {e(str(r.get('organizacion')))} AS{e(str(r.get('asn')))})
 hasta el minuto {x['vence_min']} del partido.</p>
 <h2>Por qué</h2><p>{e(x['clasificacion'])}.</p>
@@ -240,83 +263,17 @@ Firma: <code>{e(str(d.get('firma_decision', '—')))}</code></p>"""
 
 
 PAGINA = """<!doctype html><html lang=es><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
-<title>{titulo}</title><style>body{{font:15px system-ui,sans-serif;max-width:900px;margin:24px auto;padding:0 14px;color:#1b2430}}
-table{{border-collapse:collapse;width:100%;margin:8px 0}}td,th{{border:1px solid #d5dbe3;padding:5px 7px;text-align:left;font-size:13px}}
-code{{font-size:11px;word-break:break-all}}h1{{font-size:22px}}h2{{font-size:16px;margin-top:20px}}.sello{{background:#f3f6fa;padding:8px;border-radius:6px}}
-</style><body>{cuerpo}</body></html>"""
+<title>{titulo} · Bloqueo Federal</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel=stylesheet>
+<style>body{{margin:0;font:15px/1.55 Sora,system-ui,sans-serif;color:#191932;background:#f7f7f3}}
+.top{{background:#0d0d1a;color:#fff;padding:16px 28px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-.02em}}
+.top i{{width:28px;height:28px;border-radius:8px;background:#d4f7a6;display:inline-block}}
+.w{{max-width:920px;margin:0 auto;padding:26px 28px 48px}}
+table{{border-collapse:collapse;width:100%;margin:10px 0;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e6e6df}}
+td,th{{border-bottom:1px solid #e6e6df;padding:9px 12px;text-align:left;font-size:13px}}th{{color:#6b6d85;font-weight:500}}
+code{{font-size:11px;word-break:break-all;font-family:ui-monospace,Menlo,monospace}}
+h1{{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:0 0 12px}}h2{{font-size:17px;font-weight:600;margin:26px 0 6px}}
+.sello{{background:#d4f7a6;padding:12px 16px;border-radius:14px}}a{{color:#191932}}
+</style><body><div class=top><i></i>Bloqueo Federal</div><div class=w>{cuerpo}</div></body></html>"""
 
-PANEL_HTML = r"""<!doctype html><html lang=es><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
-<title>Juez de turno · Bloqueos en vivo</title>
-<style>
-:root{--az:#1d4ed8;--ro:#b91c1c;--ve:#15803d;--gr:#64748b;--bg:#f1f5f9}
-*{box-sizing:border-box}body{margin:0;font:15px system-ui,sans-serif;background:var(--bg);color:#0f172a}
-header{background:#0f172a;color:#fff;padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-header b{font-size:17px}.pill{background:#1e293b;border-radius:99px;padding:3px 10px;font-size:13px}
-.ok{background:#166534}.no{background:#991b1b}main{max-width:1100px;margin:auto;padding:14px;display:grid;grid-template-columns:2fr 1fr;gap:14px}
-@media(max-width:820px){main{grid-template-columns:1fr}}
-.card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 3px #0002;margin-bottom:12px}
-.vivo{border-left:6px solid var(--ro)}.prev{border-left:6px solid #f59e0b}
-.item{border-top:1px solid #e2e8f0;padding:8px 0;display:grid;grid-template-columns:24px 1fr;gap:8px}
-.tag{display:inline-block;font-size:11px;border-radius:4px;padding:1px 6px;margin-right:4px;color:#fff}
-.t-vivo{background:var(--ro)}.t-prev{background:#d97706}.t-ip{background:var(--az)}.t-dom{background:#7c3aed}.t-safe{background:var(--ve)}.t-warn{background:#b45309}
-small{color:var(--gr)}button{font:inherit;border:0;border-radius:8px;padding:10px 16px;cursor:pointer;color:#fff}
-.ap{background:var(--ve);font-weight:600}.re{background:var(--ro)}.sec{background:#475569}
-.acciones{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}h2{font-size:15px;margin:4px 0 10px}
-.rat{background:#fef3c7;border:2px solid #f59e0b}code{font-size:11px}
-input{font:inherit;padding:10px;border:1px solid #cbd5e1;border-radius:8px;width:100%;margin:6px 0}
-#login{max-width:360px;margin:60px auto}.vacia{color:var(--gr);text-align:center;padding:30px}
-.prov{font-size:12px}.prov span{margin-right:8px}.d{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:3px}.dg{background:#16a34a}.dr{background:#dc2626}.dy{background:#eab308}a{color:var(--az)}
-</style>
-<header><b>Bloqueos en vivo · Juez de turno</b><span class=pill id=min>—</span><span class=pill id=turno>—</span>
-<span id=quien class=pill>—</span><span style="flex:1"></span><a style="color:#93c5fd" href="/transparencia" target=_blank>Registro público</a>
-<button class=sec id=salir style="padding:5px 10px;display:none">Salir</button></header>
-<div id=login class=card style="display:none"><h2>Ingreso del juez</h2>
-<input id=u placeholder="Usuario" autocomplete=username><input id=c type=password placeholder="Contraseña" autocomplete=current-password>
-<button class=ap id=entrar style="width:100%">Entrar</button><p id=err style="color:var(--ro)"></p></div>
-<main id=app style="display:none"><section><div id=rat></div><div id=cola></div></section>
-<aside><div class=card><h2>Órdenes recientes</h2><div id=rec></div></div><div class=card><h2>Resumen</h2><div id=met></div>
-<p><small>Atajo: <b>A</b> aprueba el primer lote completo.</small></p></div></aside></main>
-<script>
-const $=id=>document.getElementById(id);let est=null,vistos=new Set(),primero=true,desmarcados=new Set();
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function api(r,b){const o=b?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}:{};const x=await fetch(r,o);return [x.status,await x.json()]}
-function bip(){try{const a=new AudioContext(),o=a.createOscillator();o.frequency.value=880;o.connect(a.destination);o.start();o.stop(a.currentTime+.15)}catch(e){}}
-$('entrar').onclick=async()=>{const[s,r]=await api('/api/login',{usuario:$('u').value,clave:$('c').value});
- if(s!==200){$('err').textContent=r.error;return}$('c').value='';if('Notification'in window)Notification.requestPermission();tick()};
-$('c').onkeydown=e=>{if(e.key==='Enter')$('entrar').click()};
-$('salir').onclick=async()=>{await api('/api/logout',{});tick()};
-async function decidir(apr,rec){await api('/api/decidir',{aprobar:apr,rechazar:rec});tick()}
-function aprobarLote(i){const g=est.cola[i];const ids=[...document.querySelectorAll(`input[data-g="${i}"]`)];
- decidir(ids.filter(x=>x.checked).map(x=>x.value),ids.filter(x=>!x.checked).map(x=>x.value))}
-function rechazarLote(i){decidir([],est.cola[i].items.map(x=>x.id))}
-document.onkeydown=e=>{if(e.key.toLowerCase()==='a'&&est&&est.puede_firmar&&est.cola.length&&document.activeElement.tagName!=='INPUT')aprobarLote(0)};
-function item(x,i){const ip=x.bloqueos.map(b=>`<span class="tag ${b.tipo==='ip'?'t-ip':'t-dom'}">${b.tipo==='ip'?'IP':'Dominio'}</span>${esc(b.objetivo)} <small>(${b.proveedores.length} prov.)</small>`).join('<br>');
- return `<div class=item><input type=checkbox ${desmarcados.has(x.id)?'':'checked'} data-g="${i}" value="${esc(x.id)}" onchange="this.checked?desmarcados.delete(this.value):desmarcados.add(this.value)">
- <div><span class="tag ${x.tipo==='preventivo'?'t-prev':'t-vivo'}">${x.tipo==='preventivo'?'PREVENTIVO':'EN VIVO'}</span>
- <b>${esc(x.host)}</b> <small>· ${esc(x.ip)} · ${esc(x.org||'')} · <a href="/expediente/${esc(x.id)}" target=_blank>${esc(x.id)}</a></small><br>
- <small>${esc(x.clasificacion)}</small><br>
- <span class="tag ${x.ip_compartida?'t-warn':'t-safe'}">${x.ip_compartida?'IP COMPARTIDA':'IP DEDICADA'}</span><small>${esc(x.riesgo)}</small><br>
- ${ip}<br><small>Evidencia: ${x.n_evidencia} · sello <code>${esc(x.sello.slice(0,16))}…</code> · espera ${x.espera_min} min</small></div></div>`}
-function render(){const s=est;$('min').textContent=`Minuto ${s.minuto.toFixed(1)} / ${s.fin_min}`;
- $('turno').textContent='De turno: '+(s.de_turno_nombres.join(', ')||'—');
- $('quien').textContent=s.juez?(s.puede_firmar?'Firmando: ':'Fuera de turno · ')+s.juez_nombre:'—';$('quien').className='pill '+(s.puede_firmar?'ok':'no');
- $('rat').innerHTML=s.ratificar.length?`<div class="card rat"><h2>Cambio de turno: ratificar ${s.ratificar.length} órdenes marco</h2>
- <small>${s.ratificar.map(esc).join('<br>')}</small><div class=acciones><button class=ap onclick="api('/api/ratificar',{}).then(tick)">Ratificar todas</button></div></div>`:'';
- $('cola').innerHTML=s.cola.length?s.cola.map((g,i)=>`<div class="card ${g.preventivo?'prev':'vivo'}">
- <h2>${i===0?'▶ ':''}${esc(g.sitio)} <small>· ${g.items.length} expediente(s)</small></h2>${g.items.map(x=>item(x,i)).join('')}
- <div class=acciones>${s.puede_firmar?`<button class=ap onclick="aprobarLote(${i})">Aprobar y firmar seleccionados</button>
- <button class=re onclick="rechazarLote(${i})">Rechazar todo</button>`:'<small>Solo el juez de turno puede firmar.</small>'}</div></div>`).join('')
- :'<div class="card vacia">Sin expedientes pendientes.</div>';
- $('rec').innerHTML=s.recientes.map(x=>`<div style="margin-bottom:8px"><a href="/expediente/${esc(x.id)}" target=_blank>${esc(x.id)}</a> ${esc(x.host)}
- <small>${esc(x.estado)}</small><div class=prov>${Object.entries(x.proveedores).map(([p,e])=>`<span><i class="d ${e==='aplicada'?'dg':e==='fallida'||e==='rechazada'?'dr':'dy'}"></i>${esc(p)}</span>`).join('')}</div></div>`).join('')||'<small>—</small>';
- const m=s.metricas;$('met').innerHTML=`<div style="font-size:30px;font-weight:700;color:#15803d">${m.protegidos.length}</div><div style="margin-bottom:6px"><b>sitios legítimos protegidos</b><br><small>Comparten servidor con un pirata y siguen en línea: se bloqueó solo el dominio.</small><br><small style="color:#15803d">${m.protegidos.slice(0,6).map(esc).join(' · ')}${m.protegidos.length>6?' …':''}</small></div><small>Expedientes ${m.expedientes} · aprobados ${m.aprobados} · descartados ${m.descartes} · órdenes aplicadas ${m.ordenes_aplicadas}</small>`}
-async function tick(){const[st,s]=await api('/api/estado');est=s;
- $('login').style.display=s.juez?'none':'block';$('app').style.display=s.juez?'grid':'none';$('salir').style.display=s.juez?'inline':'none';
- if(!s.juez){$('min').textContent=`Minuto ${s.minuto.toFixed(1)}`;return}
- const nuevos=s.cola.flatMap(g=>g.items).filter(x=>!vistos.has(x.id));nuevos.forEach(x=>vistos.add(x.id));
- if(nuevos.length&&!primero&&s.puede_firmar){bip();document.title=`(${s.cola.length}) Juez de turno`;
-  if(window.Notification&&Notification.permission==='granted')new Notification('Nuevo expediente',{body:nuevos.map(x=>x.host).join(', ')})}
- if(!s.cola.length)document.title='Juez de turno';primero=false;
- render()}
-setInterval(tick,1000);tick();
-</script></html>"""
+PANEL_HTML = (Path(__file__).resolve().parent / "panel.html").read_text(encoding="utf-8")

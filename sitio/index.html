@@ -1,0 +1,116 @@
+<!doctype html><html lang=es><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Bloqueo Federal</title>
+<link rel=preconnect href="https://fonts.googleapis.com"><link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel=stylesheet>
+<style>
+:root{--night:#0d0d1a;--ink:#191932;--lime:#d4f7a6;--lime2:#a3e35b;--paper:#f7f7f3;--red:#ff5a4e;--mist:#6b6d85;--line:#e6e6df}
+*{box-sizing:border-box}html,body{margin:0}body{font:16px/1.55 Sora,system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+.hero{position:relative;min-height:720px;color:#fff;overflow:hidden;background:var(--night)}
+.hero .ph{position:absolute;inset:-20px;background:url(photo-1522778119026-d647f0596c20.jpg) center 40%/cover;filter:blur(3px) saturate(.8);transform:scale(1.05)}
+.hero .sh{position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,13,26,.92) 0%,rgba(13,13,26,.75) 48%,rgba(13,13,26,.45) 100%),linear-gradient(0deg,rgba(13,13,26,.9),transparent 40%)}
+.in{position:relative;max-width:1200px;margin:0 auto;padding:0 40px}
+.nav{display:flex;align-items:center;gap:12px;padding:26px 0}
+.mark{width:34px;height:34px;border-radius:10px;background:#fff;color:var(--night);display:grid;place-items:center}
+.mark svg{width:20px;height:20px}.wm{font-size:24px;font-weight:600;letter-spacing:-.02em}
+.h{padding:110px 0 150px;max-width:650px}
+.h p.k{font-size:24px;margin:0 0 6px;font-weight:500}
+.h h1{font-size:58px;line-height:1.02;letter-spacing:-.035em;font-weight:600;margin:0 0 22px}
+.h p.s{font-size:19px;color:#d6d7e2;max-width:520px;margin:0 0 30px}
+.btn{display:inline-block;border-radius:999px;padding:15px 26px;font-weight:600;text-decoration:none}
+.b1{background:var(--lime);color:var(--night)}.b2{color:#fff;border:1px solid rgba(255,255,255,.35);margin-left:10px}
+/* live ticker: the one bold element */
+.tick{position:absolute;right:40px;top:96px;width:420px;background:var(--lime);color:var(--night);border-radius:22px;padding:22px 24px}
+.tick .t{display:flex;justify-content:space-between;align-items:center;font-weight:600;margin-bottom:10px}
+.tick .lv{display:flex;align-items:center;gap:8px;font-size:13px}
+.tick .lv i{width:9px;height:9px;border-radius:50%;background:var(--red);display:inline-block}
+.row{display:grid;grid-template-columns:56px 1fr;gap:10px;padding:9px 0;border-top:1px solid rgba(25,25,50,.14)}
+.row b{font-size:20px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}.row small{display:block;color:#3d4a2c;font-size:13px}
+.row.ok b{color:#2f5a12}
+.pnav{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;gap:28px;background:var(--ink);border-radius:999px;padding:14px 30px;font-size:16px;color:#fff;white-space:nowrap}
+.pnav a{color:#fff;text-decoration:none}
+section.s{padding:90px 0}section.s h2{font-size:44px;line-height:1.08;letter-spacing:-.03em;font-weight:600;margin:0 0 18px;max-width:760px}
+.lead{font-size:20px;color:#3a3b52;max-width:700px;margin:0 0 40px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.v{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px}
+.v h3{margin:0 0 8px;font-size:22px;font-weight:600;letter-spacing:-.02em}.v p{margin:0;color:#3a3b52}
+.v .src{display:block;margin-top:12px;font-size:13px;color:var(--mist)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:s}
+.st{border-top:3px solid var(--ink);padding-top:14px}.st b{display:block;font-size:18px;margin-bottom:6px}
+.st span{color:#3a3b52;font-size:15px}
+.dark{background:var(--night);color:#fff}.dark .lead{color:#c9cad6}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:34px}
+.pf{border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:22px}
+.pf .n{font-size:52px;font-weight:600;letter-spacing:-.04em;line-height:1.05}.pf .n.l{color:var(--lime)}
+.pf .c{color:#c9cad6;font-size:14px;margin-top:6px}
+.term{background:#05050c;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:20px 22px;font:14px/1.7 ui-monospace,Menlo,monospace;color:#d6d7e2}
+.term .p{color:var(--lime2)}.term .ok{color:var(--lime)}
+.law{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.law ul{margin:0;padding:0;list-style:none}.law li{padding:14px 0;border-top:1px solid var(--line);font-size:17px}
+.cta{background:var(--lime);border-radius:28px;padding:44px;display:flex;justify-content:space-between;align-items:center;gap:30px}
+.cta p{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:600;margin:0;max-width:720px}
+.cta .btn{background:var(--ink);color:#fff}
+footer{padding:30px 0 60px;color:var(--mist);font-size:14px}
+</style>
+<div class=hero><div class=ph></div><div class=sh></div>
+ <div class=in>
+  <div class=nav><span class=mark><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span class=wm>Bloqueo Federal</span></div>
+  <div class=h>
+   <p class=k>Bloqueamos la piratería en vivo</p>
+   <h1>El juez firma. La orden llega a todo el país en segundos.</h1>
+   <p class=s>Del stream pirata a la orden judicial y de ahí a todos los proveedores de internet, durante el partido y sin tirar abajo a ningún sitio inocente.</p>
+   <a class="btn b1" href="#demo">Ver la demo</a><a class="btn b2" href="#prueba">Ver los resultados</a>
+  </div>
+ </div>
+ <div class=tick>
+  <div class=t>Partido de práctica <span class=lv><i></i>en vivo</span></div>
+  <div class=row><b>2'</b><div>Stream pirata detectado<small>El expediente ya está sellado con la marca de agua y el servidor</small></div></div>
+  <div class=row><b>3'</b><div>La jueza de turno firma<small>Desde el celular, con un toque</small></div></div>
+  <div class="row ok"><b>3'</b><div>Primer bloqueo aplicado<small>Los demás proveedores confirman en minutos, con reintento si fallan</small></div></div>
+  <div class="row ok"><b>37'</b><div>El pirata se muda de servidor<small>Ya estaba bloqueado: lo encontramos antes</small></div></div>
+ </div>
+ <nav class=pnav><a href="#problema">Problema</a><a href="#como">Cómo funciona</a><a href="#prueba">Resultados</a><a href="#ley">Propuesta de ley</a></nav>
+</div>
+
+<section class=s id=problema><div class=in>
+ <h2>Hoy el pirata juega con ventaja.</h2>
+ <p class=lead>Para el Superclásico del 1 de noviembre la Justicia pidió bloquear 182 dominios. Pero un sitio pirata cambia de servidor en minutos y la orden no tiene un canal directo a todos los proveedores.</p>
+ <div class=three>
+  <div class=v><h3>El hincha</h3><p>Entra a "fútbol gratis" y le roban los datos del banco.</p><span class=src>En septiembre de 2026 se bloquearon 300 sitios que robaban datos bancarios.</span></div>
+  <div class=v><h3>La panadería del barrio</h3><p>Comparte servidor con un pirata. Si se bloquea la IP, se cae su tienda.</p><span class=src>En Italia, un bloqueo así dejó sin Google Drive a todo el país.</span></div>
+  <div class=v><h3>La cooperativa del pueblo</h3><p>Recibe la orden tarde y no llega a aplicarla. El pirata sigue al aire.</p><span class=src>Sin registro de proveedores, la orden no llega a todos.</span></div>
+ </div>
+</div></section>
+
+<section class=s id=como style="padding-top:20px"><div class=in>
+ <h2>El juez decide. La plataforma ejecuta.</h2>
+ <p class=lead>Cinco pasos, todos durante el partido.</p>
+ <div class=steps>
+  <div class=st><b>Detección</b><span>Llega el aviso de un stream pirata.</span></div>
+  <div class=st><b>Expediente sellado</b><span>Marca de agua, servidor y sitios vecinos, con huella SHA-256.</span></div>
+  <div class=st><b>Firma del juez</b><span>Solo el juez de turno, con su usuario.</span></div>
+  <div class=st><b>Todos los proveedores</b><span>Cada uno recibe el bloqueo que acepta, con reintento si falla.</span></div>
+  <div class=st><b>Vence al final</b><span>Los bloqueos por IP se levantan solos al terminar.</span></div>
+ </div>
+</div></section>
+
+<section class="s dark" id=prueba><div class=in>
+ <h2>Resultados que podés comprobar.</h2>
+ <p class=lead>Medido con el verificador oficial del desafío, sobre el simulador de la organización.</p>
+ <div class=proof>
+  <div class=pf><div class="n l">7 de 7</div><div class=c>streams piratas bloqueados. El cliente de ejemplo: 1 de 7.</div></div>
+  <div class=pf><div class="n l">0,9 %</div><div class=c>del tiempo el pirata siguió visible. El cliente de ejemplo: 86,5 %.</div></div>
+  <div class=pf><div class=n>0</div><div class=c>sitios legítimos afectados y 0 falsos positivos.</div></div>
+  <div class=pf><div class=n>8 de 8</div><div class=c>en un partido de prueba con sitios que el sistema nunca había visto.</div></div>
+ </div>
+ <div class=term><span class=p>$</span> python3 evaluacion/verificar.py --log salida/registro.jsonl<br>fases piratas bloqueadas: 7 de 7 &nbsp; visibilidad residual: 0.9 &nbsp; daño colateral: 0<br><span class=p>$</span> python3 plataforma/verificar_evidencia.py salida<br><span class=ok>RESULTADO: ÍNTEGRO</span> &nbsp; 9 sellos, 9 firmas, 9 capturas</div>
+</div></section>
+
+<section class=s id=ley><div class=in>
+ <div class=law>
+  <div><h2>Una propuesta de ley en una página.</h2><p class=lead>Para que la plataforma funcione en serio, la ley tiene que establecer seis cosas.</p></div>
+  <ul><li>Orden marco por partido, firmada por un juez</li><li>Juez de turno con firma digital</li><li>Registro obligatorio de proveedores</li><li>Solo bloqueo por dominio en IPs compartidas</li><li>Reclamos resueltos en 15 minutos</li><li>Registro público de cada bloqueo</li></ul>
+ </div>
+ <div class=cta style="margin-top:60px"><p>El juez sigue decidiendo. Nosotros hacemos que su firma llegue a todo el país en un minuto, sin tirar abajo a nadie inocente.</p><a class=btn href="#demo">Ver la demo</a></div>
+ <footer>Hackathon Argentina Space 2026, track Streaming de QualyData. Datos del simulador oficial: proveedores, jueces y sitios son ficticios.</footer>
+</div></section>
+</html>

@@ -479,6 +479,8 @@ class Plataforma:
             if nuevo == o["estado"]:
                 continue
             o["estado"] = nuevo
+            if nuevo == "aplicada":
+                o["aplicada_min"] = self.minuto
             self.audit.registrar(f"orden_{nuevo}", self.minuto, proveedor=pid, orden_id=oid, expediente=o["expediente_id"])
             if nuevo == "fallida":
                 self.fallas_por_proveedor[pid] = self.fallas_por_proveedor.get(pid, 0) + 1
