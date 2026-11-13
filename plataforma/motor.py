@@ -234,10 +234,19 @@ class Plataforma:
         if clave in self.por_objetivo:
             exp = self.expedientes[self.por_objetivo[clave]]
             exp["evidencia"].append(evidencia)
+            reabrir = exp.get("tipo") == "preventivo" and exp["estado"] == "rechazado"
             if exp.get("tipo") == "preventivo":
                 exp["tipo"] = "confirmado"  # el stream apareció donde lo predijimos
             self.audit.registrar("evidencia_agregada", self.minuto, expediente=exp["id"], deteccion=d["id"],
                                  sha256_captura=h_captura)
+            if reabrir:
+                # The judge rejected it as a prediction; now there is a live stream: back to the judge with the new evidence.
+                exp["decision_previa"] = exp["decision"]
+                exp["decision"] = None
+                exp["estado"] = "pendiente_juez"
+                self.audit.registrar("expediente_reabierto", self.minuto, expediente=exp["id"],
+                                     motivo="stream en vivo detectado en un servidor rechazado como preventivo")
+                self.notificar_juez(exp)
             return
         exp = self.crear_expediente(host, ip, d.get("asn"), motivo, [evidencia], "deteccion",
                                     marca=evidencia["marca_de_agua"])
