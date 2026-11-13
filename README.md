@@ -1,140 +1,184 @@
-# Bloqueo Federal · Plataforma de órdenes de bloqueo en vivo
+<div align="center">
 
-MVP para el **Desafío Fútbol** (track Streaming de QualyData, Hackathon Argentina Space 2026, Salta).
+# Bloqueo Federal
 
-> **El juez sigue decidiendo. Bloqueo Federal hace que su firma llegue a todo el país en un minuto, sin tirar
-> abajo a nadie inocente.**
+**Bloqueamos la piratería en vivo, sin tocar a nadie inocente.**
 
-## Por qué importa
+Plataforma judicial que lleva cada stream pirata de un partido a la firma del juez de turno
+y de ahí a todos los proveedores de internet, durante el partido.
+
+[Sitio del proyecto](https://stevmolina.github.io/bloqueo-federal-sitio/) ·
+[Resultados](#resultados) ·
+[Cómo funciona](#cómo-funciona) ·
+[Correrlo](#correrlo-en-5-minutos) ·
+[Verificarlo](#verificalo-vos-mismo) ·
+[Propuesta normativa](entrega/propuesta_normativa.md)
+
+![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-191932)
+![Sin dependencias](https://img.shields.io/badge/dependencias-0-191932)
+![Verificador oficial](https://img.shields.io/badge/verificador%20oficial-7%2F7%20bloqueados-2f8f3a)
+![Track](https://img.shields.io/badge/Argentina%20Space%202026-QualyData%20Streaming-d4f7a6)
+
+<img src="sitio/panel.png" alt="Panel del juez de turno: marcador con streams bloqueados y un pedido de bloqueo que protege a 11 sitios inocentes" width="900">
+
+<sub>Panel del juez durante un partido de prueba. Proveedores, jueces y sitios son ficticios (simulador oficial del desafío).</sub>
+
+</div>
+
+---
+
+## El problema
 
 Para el Superclásico del 1 de noviembre de 2026 la Justicia pidió bloquear **182 dominios piratas**
 ([La Capital](https://www.lacapital.com.ar/superclasico-bloquearon-argentina-mas-180-sitios-piratas-que-iban-retransmitir-boca-y-river-n10289906.html)).
-Pero un sitio pirata cambia de servidor en minutos y el partido dura dos horas. Hoy pierden tres:
+Pero un sitio pirata cambia de servidor en minutos, el partido dura dos horas y la orden no tiene un canal
+directo a todos los proveedores. Hoy pierden tres:
 
-- **El hincha.** "Fútbol gratis" muchas veces es una trampa: en septiembre de 2026 la Justicia bloqueó 300 sitios
-  que robaban datos bancarios ([Señal News](https://senalnews.com/es/data/argentina-tras-denuncia-de-alianza-la-justicia-bloquea-300-dominios-clandestinos)).
-- **La panadería del barrio.** Si comparte servidor con un pirata y se bloquea la IP, se cae su tienda. En Italia,
-  un sistema de bloqueo sin juez dejó sin Google Drive a todo el país
-  ([TorrentFreak](https://torrentfreak.com/google-drive-blackout-in-italy-after-another-major-anti-piracy-blunder-241020/)).
-- **La cooperativa del pueblo.** Sin un canal directo, los proveedores chicos reciben la orden tarde y no llegan a
-  aplicarla.
+| | |
+|---|---|
+| **El hincha** | "Fútbol gratis" muchas veces termina en datos bancarios robados: en septiembre de 2026 se bloquearon 300 sitios que los robaban ([Señal News](https://senalnews.com/es/data/argentina-tras-denuncia-de-alianza-la-justicia-bloquea-300-dominios-clandestinos)). |
+| **La panadería del barrio** | Si comparte servidor con un pirata y se bloquea la IP, se cae su tienda. En Italia, un bloqueo así dejó sin Google Drive a todo el país ([TorrentFreak](https://torrentfreak.com/google-drive-blackout-in-italy-after-another-major-anti-piracy-blunder-241020/)). |
+| **La cooperativa del pueblo** | Los proveedores chicos reciben la orden tarde y no llegan a aplicarla. |
 
-**Qué cambia con Bloqueo Federal:** el juez de turno ve evidencia sellada y firma desde el celular; la orden llega a
-todos los proveedores, del grande a la cooperativa, en el tipo de bloqueo que cada uno acepta; si el servidor es
-compartido, solo se bloquea el dominio. En el partido de práctica: **7 de 7 streams bloqueados, el pirata visible menos
-del 1 % del tiempo y 0 sitios legítimos afectados** (verificador oficial).
+## Resultados
 
-**Video de demo (2:56):** ver Hacki.
+Medidos con `evaluacion/verificar.py`, el verificador oficial del desafío, sin modificar.
 
-Durante el partido, la plataforma hace el circuito completo:
+| | Cliente de ejemplo | **Bloqueo Federal** |
+|---|---|---|
+| Streams piratas bloqueados | 1 de 7 | **7 de 7** |
+| Tiempo que el pirata siguió visible | 86,5 % | **0,9 %** |
+| Sitios inocentes afectados | 0 | **0** |
+| Bloqueos al licenciatario autorizado | 0 | **0** |
+| Bloqueos por IP activos después del partido | 0 | **0** |
+| Órdenes firmadas por un juez fuera de turno | 0 | **0** |
+| Partido nuevo, nunca visto por el sistema | — | **8 de 8, 0,8 %** |
 
+El partido nuevo es un escenario de estrés propio (otros sitios, otras IPs, otros tiempos y trampas extra).
+La plataforma nunca lee las respuestas correctas.
+
+## Cómo funciona
+
+```mermaid
+flowchart LR
+  A[Stream pirata detectado] --> B[Expediente sellado<br/>marca de agua, servidor, SHA-256]
+  B --> C{Juez de turno<br/>firma}
+  C -->|aprueba| D[Orden a cada proveedor<br/>en el bloqueo que acepta]
+  D --> E[Confirmación<br/>y reintento]
+  E --> F[Vence al final<br/>del partido]
+  C -->|rechaza| G[Archivo]
+  B & C & D & E & F --> L[(Auditoría encadenada)]
 ```
-detección → expediente con evidencia sellada → juez de turno firma → orden a cada proveedor
-         → confirmación y reintento → vencimiento al final → auditoría encadenada
-```
 
-Todo corre contra el simulador oficial. No se bloquea nada real.
+**El juez decide; la plataforma ejecuta.** Nadie firma en nombre del juez: la firma se genera con su clave
+solo después de que aprueba en el panel, y solo mientras está de turno.
 
-## Cómo correrlo
+### Cómo decide qué bloquear
 
-Requisitos: Python 3.9+, sin dependencias externas. Clonar este repo junto al repo del desafío
-(`desafio-futbol`).
+Cuatro reglas, elegidas probando más de diez estrategias contra el verificador oficial:
+
+1. **Solo la señal del partido.** Si la marca de agua no es la oficial, o es el licenciatario en su propio
+   dominio, no se pide nada.
+2. **Servidor compartido, solo el dominio.** Si en la misma IP viven sitios inocentes (DNS pasivo), se bloquea
+   el nombre del sitio y no la dirección del servidor.
+3. **Servidor exclusivo, doble bloqueo.** Si la IP es solo del pirata, se pide IP y dominio: si uno falla, el
+   otro sigue.
+4. **Adelantarse a la mudanza.** Se buscan los servidores de respaldo del mismo sitio y el juez los aprueba
+   junto al caso en vivo. Cuando el pirata se muda, ya estaba bloqueado.
+
+| Estrategia | Pirata visible | Sitios inocentes afectados |
+|---|---|---|
+| Bloquear siempre la IP | 6,0 % | 5 bloqueos |
+| Bloquear siempre el dominio | 3,3 % | 0 |
+| **Las cuatro reglas** | **0,9 %** | **0** |
+
+<details>
+<summary>Nota sobre la métrica oficial</summary>
+
+`verificar.py` suma los minutos de todas las órdenes que cubren una fase en un mismo proveedor, así que dos
+órdenes superpuestas (IP + dominio) cuentan dos veces. Medimos también con unión de intervalos
+(`pruebas/puntaje_union.py`) y elegimos la estrategia por ese número. No enviamos órdenes duplicadas para
+aprovechar el efecto.
+</details>
+
+## Correrlo en 5 minutos
+
+Requisitos: Python 3.9 o superior. Sin dependencias externas.
 
 ```bash
-# 1. Simulador oficial (otra terminal)
-python3 ../desafio-futbol/simulador/servidor.py --escenario ../desafio-futbol/datos/escenario_practica.json --acelerar 6
+git clone https://github.com/qualydata-org/desafio-futbol.git
+git clone https://github.com/stevmolina/bloqueo-federal.git
+cd bloqueo-federal
 
-# 2. Plataforma + panel del juez
+# Terminal 1: simulador oficial (x6 = el partido dura 17,5 minutos)
+python3 ../desafio-futbol/simulador/servidor.py \
+  --escenario ../desafio-futbol/datos/escenario_practica.json --acelerar 6 --log salida/registro.jsonl
+
+# Terminal 2: plataforma y panel del juez
 python3 plataforma/motor.py --servidor http://localhost:8080 \
   --juzgados ../desafio-futbol/datos/juzgados.json --salida salida --web 8090
-
-# 3. Abrir http://localhost:8090 e ingresar como juez de turno
-#    Usuarios de DEMOSTRACIÓN: laura / laura2026 (jueza Laura, turno 1) · martin / martin2026 (juez Martín, turno 2)
-
-# 4. Al terminar: puntaje oficial, verificación de evidencia y exportación a entrega/
-python3 ../desafio-futbol/evaluacion/verificar.py --log salida/registro.jsonl   # si el simulador escribió ahí
-python3 plataforma/verificar_evidencia.py salida --juzgados ../desafio-futbol/datos/juzgados.json --exportar entrega
 ```
 
-Otras páginas del panel: `/transparencia` (registro público) y `/expediente/<id>` (vista imprimible
-con verificación del sello).
+Abrí <http://localhost:8090> e ingresá como juez de turno.
 
-## Qué hace, paso a paso
+| Usuario de demostración | Contraseña | Turno |
+|---|---|---|
+| `laura` | `laura2026` | minutos 0 a 50 |
+| `martin` | `martin2026` | minuto 50 en adelante (ratifica las órdenes del turno anterior) |
 
-1. **Expediente.** Por cada detección verifica la marca de agua contra `GET /partido`. Descarta lo que
-   no es la señal del partido (otra marca o ninguna) y al **licenciatario autorizado en sus dominios**.
-   La señal del licenciatario en un dominio no autorizado sí se trata como pirata. Registra servidor
-   (host, IP, ASN y organización), consulta DNS pasivo y guarda la captura con su SHA-256.
-2. **Riesgo colateral.** Si la IP aloja otros sitios (o es CDN u hosting compartido, o no hay datos),
-   **solo se pide bloqueo por dominio**. Si la IP es dedicada, se pide IP **y** dominio (respaldo), y
-   también los otros dominios del mismo sitio en esa IP.
-3. **Juez de turno.** Login con usuario y contraseña (hash PBKDF2). Cada juez ve la cola y firma solo
-   durante su turno. Al cambio de turno, lo pendiente pasa al juez entrante, que ratifica las órdenes
-   marco del turno anterior en un clic. La plataforma firma con la clave del juez **solo después** de
-   su aprobación.
-4. **Cola inteligente.** Primero los streams en vivo y después los preventivos. Un lote por sitio u
-   operación: el juez ve cada servidor y puede destildar cualquiera antes de firmar. Aviso sonoro y
-   notificación del navegador. Atajo **A** para aprobar el primer lote.
-5. **Orden marco.** Si el juez de turno ya aprobó ese sitio o esa misma marca de agua filtrada, el
-   servidor nuevo se incorpora a esa orden, firmada por ese mismo juez.
-6. **Infraestructura vinculada (preventivo).** Al crear un expediente se consulta DNS pasivo por
-   servidores hermanos del sitio (`s1`→`s2`, `espejo.`, `mirror.`, …). Se proponen al juez en el mismo
-   lote como bloqueo **preventivo**. Nunca se incluye una IP compartida.
-7. **Proveedores.** A cada proveedor se le envía el tipo de bloqueo que acepta. Se sigue el estado y se
-   reenvía con un `orden_id` nuevo si falla. Si el juez que aprobó ya no está de turno, el reintento
-   lo firma el entrante.
-8. **Vencimiento.** Las órdenes vencen en el minuto final del partido (`vence_min`), así no quedan
-   bloqueos por IP activos después.
-9. **Reclamos (extra).** Ante un reclamo, se levanta la orden con firma judicial y, si era por IP, se
-   reemplaza por un bloqueo por dominio.
-10. **Auditoría.** Cada paso queda en `auditoria.jsonl` con el hash del anterior (cadena). Cambiar,
-    borrar o reordenar una línea rompe la cadena. `verificar_evidencia.py` revisa la cadena, los sellos
-    de los expedientes, las capturas y las firmas de las decisiones.
+Otras páginas: `/expediente/<id>` (expediente con verificación del sello) y `/transparencia` (registro público).
 
-## Resultados en práctica (simulador oficial, x30)
+## Verificalo vos mismo
 
-Probamos varias estrategias con el verificador oficial y con un escenario de estrés propio (otros
-dominios, IPs y tiempos, más trampas: detección sin marca y señal del licenciatario reenviada).
-La plataforma no lee nunca las respuestas correctas.
+```bash
+# Puntaje oficial del partido
+python3 ../desafio-futbol/evaluacion/verificar.py --log salida/registro.jsonl
 
-| Estrategia | Fases bloqueadas | Visibilidad residual (oficial) | Sitios legítimos afectados |
-|---|---|---|---|
-| Cliente mínimo de ejemplo | 1 de 7 | 86,5 % | 0 |
-| Solo IP | 7 de 7 | 6,0 % | 5 |
-| Solo dominio | 7 de 7 | 3,3 % | 0 |
-| **Esta plataforma** (juez 1 min por lote) | **7 de 7** | **0,9 %** | **0** |
-| **Esta plataforma**, escenario de estrés | **8 de 8** | **0,8 %** | **0** |
+# Integridad de la evidencia: cadena de auditoría, sellos, capturas y firmas
+python3 plataforma/verificar_evidencia.py salida --juzgados ../desafio-futbol/datos/juzgados.json
+```
 
-En todas las corridas: 0 falsos positivos, 0 bloqueos por IP activos después del partido, 0 órdenes
-firmadas fuera de turno, 0 órdenes rechazadas.
+Cambiá cualquier línea de `salida/auditoria.jsonl` y volvé a correr la verificación: la cadena se rompe y lo
+detecta.
 
-**Nota sobre la métrica.** `verificar.py` suma los minutos de todas las órdenes que cubren una fase en
-un mismo proveedor y recorta al largo de la fase, así que dos órdenes superpuestas (IP + dominio)
-cuentan dos veces. Medimos también con la unión de intervalos (`pruebas/puntaje_union.py`) y
-elegimos la estrategia por ese número. No enviamos órdenes duplicadas para aprovechar esto.
+## Entrega
 
-## Supuestos
-
-- La marca de agua extraída identifica la señal; el prefijo indica oficial o licenciatario.
-- Dominio base = últimas dos etiquetas del host (`s1.pelotaya.test` → `pelotaya.test`).
-- IP sin datos de DNS pasivo = compartida (se bloquea solo por dominio).
-- Los servidores hermanos detectados por DNS pasivo son del mismo operador si comparten dominio base y
-  su IP no aloja otros sitios. El juez puede rechazar cada uno.
-- La firma HMAC de demostración reemplaza a la firma digital real.
-
-## Qué existía antes del evento
-
-- El simulador, los datos y el verificador son del repo oficial del desafío.
-- Solo biblioteca estándar de Python. No usamos código propio previo.
-- Desarrollado durante el hackathon con asistencia de IA (Claude).
+| Archivo | Contenido |
+|---|---|
+| [`entrega/propuesta_normativa.md`](entrega/propuesta_normativa.md) | Propuesta normativa de una página |
+| `entrega/expediente_*.json` | Expediente exportado: evidencia, sello, órdenes y decisión firmada |
+| `entrega/auditoria.jsonl` | Registro de auditoría encadenado con SHA-256 |
+| `entrega/verificacion.json` | Resultado de `verificar_evidencia.py` |
+| [`entrega/LEEME.md`](entrega/LEEME.md) | Qué partido generó cada archivo |
 
 ## Estructura
 
 ```
-plataforma/motor.py               circuito completo y estrategias
-plataforma/web.py                 panel del juez, transparencia, vista de expediente
-plataforma/verificar_evidencia.py verificación de integridad y exportación a entrega/
-plataforma/usuarios_demo.json     usuarios de demostración (hash PBKDF2)
-pruebas/                          comparador de estrategias, escenario de estrés, juez automático de prueba
-entrega/                          expediente y auditoría del partido final, propuesta normativa
+plataforma/
+  motor.py               circuito completo: expediente, juez, proveedores, reintento, vencimiento, auditoría
+  web.py                 servidor del panel, expediente y registro público
+  panel.html             panel del juez
+  verificar_evidencia.py verificación de integridad y exportación a entrega/
+  usuarios_demo.json     usuarios de demostración (contraseñas con PBKDF2)
+pruebas/                 comparador de estrategias, escenario de estrés, juez automático de prueba
+entrega/                 archivos para la evaluación
+sitio/                   sitio del proyecto
 ```
+
+## Supuestos
+
+- La marca de agua extraída identifica la señal; su prefijo indica oficial o licenciatario.
+- El dominio base son las dos últimas etiquetas del host, o tres bajo sufijos públicos como `.com.ar`.
+- Una IP sin datos de DNS pasivo se trata como compartida: se bloquea solo el dominio.
+- La firma HMAC de demostración del simulador reemplaza a la firma digital real del juez.
+
+## Qué existía antes del evento
+
+- El simulador, los datos y el verificador son del [repositorio oficial del desafío](https://github.com/qualydata-org/desafio-futbol).
+- Solo biblioteca estándar de Python. No usamos código propio previo.
+- Desarrollado durante el hackathon con asistencia de IA (Claude).
+
+---
+
+<sub>Hackathon Argentina Space 2026 · Track Streaming de QualyData · Salta. Todos los datos del simulador son
+ficticios: no se bloquea nada real. Este material no es asesoramiento legal.</sub>
